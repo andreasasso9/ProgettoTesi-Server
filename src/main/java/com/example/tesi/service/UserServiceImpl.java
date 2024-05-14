@@ -5,7 +5,6 @@ import com.example.tesi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -18,7 +17,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User getUser(UUID userId) {
+	public User getUserById(UUID userId) {
 		return userRepository.findById(userId).orElse(null);
 	}
 
@@ -30,5 +29,10 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void deleteUser(UUID id) {
 		userRepository.deleteById(id);
+	}
+
+	@Override
+	public User getUserByUsername(String username) {
+		return userRepository.findByUsername(username);
 	}
 }
