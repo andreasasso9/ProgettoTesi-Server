@@ -16,11 +16,10 @@ public class Prodotto implements Serializable {
 	private Brand brand;
 	private Condizioni condizioni;
 	private double prezzo;
-	@OneToMany(mappedBy = "Prodotto")
+	@OneToMany(mappedBy = "value")
 	private List<FotoByteArray> foto;
 	private int nPreferiti;
 	@ManyToOne
-	@JoinColumn(name = "proprietario")
 	private User proprietario;
 	@Id @GeneratedValue
 	private Long id;

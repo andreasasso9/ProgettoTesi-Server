@@ -15,11 +15,10 @@ public class User implements Serializable {
 	@Column(unique = true)
 	private String username;
 	private String password;
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	private String indirizzo;
 	@OneToMany
-	@JoinColumn(name = "prodotti")
 	private List<Prodotto> prodotti;
 
 	public User(){}
@@ -28,7 +27,6 @@ public class User implements Serializable {
 		this.email = email;
 		this.username = username;
 		this.password = password;
-		this.id = UUID.randomUUID();
 		this.indirizzo =indirizzo;
 		prodotti=new ArrayList<>();
 	}
