@@ -24,10 +24,17 @@ public class UserController {
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity<User> saveUser(@RequestBody User user) {
-		user.setPassword(PasswordEncrypter.encrypt(user.getPassword()));
+	public ResponseEntity<User> saveUser(
+			@RequestParam String email,
+			@RequestParam String username,
+			@RequestAttribute String password,
+			@RequestParam String indirizzo
+	) {
+		User user=new User(email, username, password, indirizzo);
 		userService.saveUser(user);
+
 		logger.log(Level.INFO, "Save succcessful");
+
 		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
 
