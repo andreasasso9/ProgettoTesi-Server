@@ -34,14 +34,7 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<User> loginUser(@RequestParam("username") String username, @RequestParam("password") String password) {
 		User userToLogin=userService.getUserByUsername(username);
-		String passwordEncrypted = PasswordEncrypter.encrypt(password);
-		if (userToLogin!=null && userToLogin.getPassword().equals(passwordEncrypted)) {
-			logger.log(Level.INFO, "Login successful");
-			return ResponseEntity.status(HttpStatus.OK).body(userToLogin);
-		} else {
-			logger.log(Level.INFO, "Login failed");
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-		}
+		return ResponseEntity.status(HttpStatus.OK).body(userToLogin);
 	}
 
 	//TODO implementare gli altri metodi per user
