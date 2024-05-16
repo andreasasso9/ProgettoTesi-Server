@@ -1,7 +1,6 @@
 package com.example.tesi.filter;
 
 import com.example.tesi.entity.User;
-import com.example.tesi.repository.UserRepository;
 import com.example.tesi.service.UserService;
 import com.example.tesi.utility.PasswordEncrypter;
 import jakarta.servlet.FilterChain;
@@ -46,6 +45,6 @@ public class UserLoginFilter extends OncePerRequestFilter {
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 		String path = request.getServletPath();
-		return !path.startsWith("/user");
+		return !path.contains("/login");
 	}
 }

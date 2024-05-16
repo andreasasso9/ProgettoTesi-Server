@@ -25,7 +25,6 @@ public class UserController {
 
 	@PostMapping("/save")
 	public ResponseEntity<User> saveUser(@RequestBody User user) {
-		user.setPassword(PasswordEncrypter.encrypt(user.getPassword()));
 		userService.saveUser(user);
 		logger.log(Level.INFO, "Save succcessful");
 		return ResponseEntity.status(HttpStatus.OK).body(user);
