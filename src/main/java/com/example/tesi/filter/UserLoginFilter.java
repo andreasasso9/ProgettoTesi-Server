@@ -24,7 +24,7 @@ public class UserLoginFilter extends OncePerRequestFilter {
 	@Autowired
 	public UserLoginFilter(UserService userService) {
 		this.userService = userService;
-		logger=Logger.getLogger("global");
+		logger=Logger.getLogger(this.getClass().getName());
 	}
 
 	@Override

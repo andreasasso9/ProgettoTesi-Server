@@ -20,7 +20,7 @@ public class UserController {
 	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
-		logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+		logger = Logger.getLogger(this.getClass().getName());
 	}
 
 	@PostMapping("/save")

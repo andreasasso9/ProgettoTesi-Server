@@ -15,7 +15,7 @@ public class UserSaveInterceptor implements HandlerInterceptor {
 	private final Logger logger;
 
 	public UserSaveInterceptor() {
-		this.logger = Logger.getLogger("global");
+		this.logger = Logger.getLogger(this.getClass().getName());
 	}
 
 	@Override
