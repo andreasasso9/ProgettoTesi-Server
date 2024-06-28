@@ -6,11 +6,15 @@ import java.io.Serializable;
 
 @Entity
 public class FotoByteArray implements Serializable {
-	@Id
-	@GeneratedValue
+	@Id @GeneratedValue
 	private Long id;
-	@Lob
+
+	@Lob @Column(columnDefinition = "MEDIUMBLOB")
 	private byte[] value;
+
+	@ManyToOne
+	private Prodotto prodotto;
+	//TODO implementare metodo per il salvataggio delle foto quandi si carica un prodotto
 
 	public FotoByteArray() {}
 
@@ -28,5 +32,13 @@ public class FotoByteArray implements Serializable {
 
 	public void setValue(byte[] value) {
 		this.value = value;
+	}
+
+	public Prodotto getProdotto() {
+		return prodotto;
+	}
+
+	public void setProdotto(Prodotto prodotto) {
+		this.prodotto = prodotto;
 	}
 }

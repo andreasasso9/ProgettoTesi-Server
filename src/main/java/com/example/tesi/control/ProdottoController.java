@@ -1,11 +1,6 @@
 package com.example.tesi.control;
 
-import com.example.tesi.entity.FotoByteArray;
 import com.example.tesi.entity.Prodotto;
-import com.example.tesi.entity.User;
-import com.example.tesi.entity.entityoptions.Brand;
-import com.example.tesi.entity.entityoptions.Categoria;
-import com.example.tesi.entity.entityoptions.Condizioni;
 import com.example.tesi.service.ProdottoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,15 +26,32 @@ public class ProdottoController {
 		logger = Logger.getLogger(this.getClass().getName());
 	}
 
-	@PostMapping("/add")
-	public ResponseEntity<Boolean> addProdotto(@RequestBody Prodotto prodotto) {
+	@PostMapping("/addProdotto")
+	public ResponseEntity<Prodotto> addProdotto(@RequestBody Prodotto prodotto) {
 		logger.log(Level.INFO, "ADD PRODOTTO STARTED");
-		if (prodottoService.addProdotto(prodotto)) {
-			logger.log(Level.INFO, "Add successful");
-			return ResponseEntity.status(HttpStatus.OK).body(true);
+		Prodotto result = prodottoService.addProdotto(prodotto);
+		if (result!=null) {
+			logger.log(Level.INFO, "ADD SUCCESSFUL");
+			return ResponseEntity.ok(result);
 		} else {
-			logger.log(Level.INFO, "Add failed");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+			logger.log(Level.INFO, "ADD FAILED");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+
+	@PostMapping("/getAll")
+	public ResponseEntity<List<Prodotto>> getAll(@RequestBody Integer limit) {
+		logger.log(Level.INFO, "GET ALL PRODOTTO STARTED");
+		List<Prodotto> prodotti=prodottoService.getAllProdotto();
+		if (prodotti.size() > limit)
+			prodotti = prodotti.subList(0, limit);
+
+		if (!prodotti.isEmpty()) {
+			logger.log(Level.INFO, "GET ALL PRODOTTO SUCCESSFUL");
+			return ResponseEntity.ok(prodotti);
+		} else {
+			logger.log(Level.INFO, "GET ALL PRODOTTO FAILED");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
 }

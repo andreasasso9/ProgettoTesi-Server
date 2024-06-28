@@ -2,9 +2,7 @@ package com.example.tesi.control;
 
 import com.example.tesi.entity.User;
 import com.example.tesi.service.UserService;
-import com.example.tesi.utility.PasswordEncrypter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,13 +33,13 @@ public class UserController {
 
 		logger.log(Level.INFO, "Save succcessful");
 
-		return ResponseEntity.status(HttpStatus.OK).body(user);
+		return ResponseEntity.ok(user);
 	}
 
 	@PostMapping("/login")
 	public ResponseEntity<User> loginUser(@RequestParam("username") String username, @RequestParam("password") String password) {
 		User userToLogin=userService.getUserByUsername(username);
-		return ResponseEntity.status(HttpStatus.OK).body(userToLogin);
+		return ResponseEntity.ok(userToLogin);
 	}
 
 	//TODO implementare gli altri metodi per user

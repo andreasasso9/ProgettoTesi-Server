@@ -1,5 +1,6 @@
 package com.example.tesi.service;
 
+import com.example.tesi.entity.FotoByteArray;
 import com.example.tesi.entity.Prodotto;
 import com.example.tesi.repository.ProdottoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,12 @@ import java.util.List;
 @Service
 public class ProdottoServiceImpl implements ProdottoService{
 	private final ProdottoRepository prodottoRepository;
+	private final FotoProdottoService fotoProdottoService;
 
 	@Autowired
-	public ProdottoServiceImpl(ProdottoRepository prodottoRepository) {
+	public ProdottoServiceImpl(ProdottoRepository prodottoRepository, FotoProdottoService fotoProdottoService) {
 		this.prodottoRepository = prodottoRepository;
+		this.fotoProdottoService = fotoProdottoService;
 	}
 
 	@Override
@@ -27,9 +30,8 @@ public class ProdottoServiceImpl implements ProdottoService{
 	}
 
 	@Override
-	public boolean addProdotto(Prodotto prodotto) {
-		prodottoRepository.save(prodotto);
-		return true;
+	public Prodotto addProdotto(Prodotto prodotto) {
+		return prodottoRepository.save(prodotto);
 	}
 
 	@Override
