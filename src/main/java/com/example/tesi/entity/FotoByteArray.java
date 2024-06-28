@@ -14,7 +14,6 @@ public class FotoByteArray implements Serializable {
 
 	@ManyToOne
 	private Prodotto prodotto;
-	//TODO implementare metodo per il salvataggio delle foto quandi si carica un prodotto
 
 	public FotoByteArray() {}
 
