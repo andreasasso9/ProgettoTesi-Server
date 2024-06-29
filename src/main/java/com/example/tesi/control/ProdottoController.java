@@ -1,16 +1,18 @@
 package com.example.tesi.control;
 
 import com.example.tesi.entity.Prodotto;
+import com.example.tesi.entity.User;
 import com.example.tesi.service.ProdottoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,7 +20,8 @@ import java.util.logging.Logger;
 @RequestMapping("/prodotto")
 public class ProdottoController {
 	private final ProdottoService prodottoService;
-	private Logger logger;
+	private final Logger logger;
+	private final int PAGE_LIMIT=20;
 
 	@Autowired
 	public ProdottoController(ProdottoService prodottoService) {
@@ -51,6 +54,20 @@ public class ProdottoController {
 			return ResponseEntity.ok(prodotti);
 		} else {
 			logger.log(Level.INFO, "GET ALL PRODOTTO FAILED");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+
+	@PostMapping("/getAllNotOwnedBy")
+	public ResponseEntity<List<Prodotto>> getAllNotOwnedBy(@RequestBody User user) {
+		Pageable pageable= PageRequest.of(0, PAGE_LIMIT);
+		List<Prodotto> prodotti=prodottoService.getAllProdottoNotOwnedBy(user, pageable);
+		if (prodotti!=null && !prodotti.isEmpty()) {
+			logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
+			return ResponseEntity.ok(prodotti);
+		}
+		else {
+			logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY FAILED");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}

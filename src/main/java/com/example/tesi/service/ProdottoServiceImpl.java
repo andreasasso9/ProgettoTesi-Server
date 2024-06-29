@@ -1,9 +1,9 @@
 package com.example.tesi.service;
-
-import com.example.tesi.entity.FotoByteArray;
 import com.example.tesi.entity.Prodotto;
+import com.example.tesi.entity.User;
 import com.example.tesi.repository.ProdottoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,12 +11,10 @@ import java.util.List;
 @Service
 public class ProdottoServiceImpl implements ProdottoService{
 	private final ProdottoRepository prodottoRepository;
-	private final FotoProdottoService fotoProdottoService;
 
 	@Autowired
-	public ProdottoServiceImpl(ProdottoRepository prodottoRepository, FotoProdottoService fotoProdottoService) {
+	public ProdottoServiceImpl(ProdottoRepository prodottoRepository) {
 		this.prodottoRepository = prodottoRepository;
-		this.fotoProdottoService = fotoProdottoService;
 	}
 
 	@Override
@@ -45,5 +43,10 @@ public class ProdottoServiceImpl implements ProdottoService{
 	public boolean deleteProdotto(long id) {
 		prodottoRepository.deleteById(id);
 		return true;
+	}
+
+	@Override
+	public List<Prodotto> getAllProdottoNotOwnedBy(User user, Pageable pageable) {
+		return prodottoRepository.getAllProdottoNotOwnedBy(user.getId(), pageable);
 	}
 }

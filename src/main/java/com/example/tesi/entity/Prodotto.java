@@ -6,7 +6,6 @@ import com.example.tesi.entity.entityoptions.Condizioni;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
