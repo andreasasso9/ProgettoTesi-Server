@@ -38,8 +38,8 @@ public class FotoProdottoController {
 		List<FotoByteArray> result=fotoProdottoService.findByProdotto(prodotto);
 		if (result!=null)
 			return ResponseEntity.ok(result);
-		else
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
 	@PostMapping("/findFirst")
@@ -47,7 +47,7 @@ public class FotoProdottoController {
 		List<FotoByteArray> foto=findByProdotto(prodotto).getBody();
 		if (foto!=null && !foto.isEmpty())
 			return ResponseEntity.ok(foto.getFirst());
-		else
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 }

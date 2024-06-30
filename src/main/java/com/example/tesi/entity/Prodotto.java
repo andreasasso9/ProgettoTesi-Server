@@ -6,6 +6,7 @@ import com.example.tesi.entity.entityoptions.Condizioni;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,10 +17,12 @@ public class Prodotto implements Serializable {
 	private Brand brand;
 	private Condizioni condizioni;
 	private double prezzo;
-	private int nPreferiti;
+	private int miPiace;
 	private UUID idProprietario;
 	@Id @GeneratedValue
 	private Long id;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<FotoByteArray> foto;
 
 	public Prodotto(UUID idProprietario, String titolo, String descrizione, Categoria categoria, Brand brand, Condizioni condizioni, double prezzo) {
 		this.idProprietario = idProprietario;
@@ -29,7 +32,7 @@ public class Prodotto implements Serializable {
 		this.brand = brand;
 		this.condizioni = condizioni;
 		this.prezzo = prezzo;
-		nPreferiti=0;
+		this.miPiace = 0;
 	}
 
 	public Prodotto() {}
@@ -86,12 +89,12 @@ public class Prodotto implements Serializable {
 		this.prezzo = prezzo;
 	}
 
-	public int getPreferiti() {
-		return nPreferiti;
+	public int getMiPiace() {
+		return miPiace;
 	}
 
-	public void setPreferiti(int nPreferiti) {
-		this.nPreferiti = nPreferiti;
+	public void setMiPiace(int miPiace) {
+		this.miPiace = miPiace;
 	}
 
 	public Long getId() {

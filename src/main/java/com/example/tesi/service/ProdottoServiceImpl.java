@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProdottoServiceImpl implements ProdottoService{
@@ -34,8 +35,6 @@ public class ProdottoServiceImpl implements ProdottoService{
 
 	@Override
 	public boolean updateProdotto(Prodotto prodotto) {
-		//TODO completare metodo update
-		//prodottoRepository.update(prodotto);
 		return true;
 	}
 
@@ -47,6 +46,20 @@ public class ProdottoServiceImpl implements ProdottoService{
 
 	@Override
 	public List<Prodotto> getAllProdottoNotOwnedBy(User user, Pageable pageable) {
-		return prodottoRepository.getAllProdottoNotOwnedBy(user.getId(), pageable);
+		List<Prodotto> result=prodottoRepository.getAllProdottoNotOwnedBy(user.getId(), pageable);
+		return result;
+	}
+
+	@Override
+	public boolean miPiace(Long idProdotto) {
+		Optional<Prodotto>oldProdotto=prodottoRepository.findById(idProdotto);
+		if (oldProdotto.isPresent()) {
+			Prodotto p=oldProdotto.get();
+			p.setMiPiace(p.getMiPiace()+1);
+			prodottoRepository.save(p);
+			return true;
+		}
+
+		return false;
 	}
 }

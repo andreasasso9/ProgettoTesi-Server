@@ -3,9 +3,9 @@ package com.example.tesi.entity;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,8 +18,8 @@ public class User implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	private String indirizzo;
-//	@OneToMany
-//	private List<Prodotto> prodotti;
+	@OneToMany
+	private Set<Prodotto> prodottiPreferiti;
 
 	public User(){}
 
@@ -27,8 +27,8 @@ public class User implements Serializable {
 		this.email = email;
 		this.username = username;
 		this.password = password;
-		this.indirizzo =indirizzo;
-//		prodotti=new ArrayList<>();
+		this.indirizzo = indirizzo;
+		prodottiPreferiti = new HashSet<>();
 	}
 
 	public String getEmail() {

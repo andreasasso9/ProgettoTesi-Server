@@ -4,7 +4,6 @@ import com.example.tesi.entity.Prodotto;
 import com.example.tesi.entity.User;
 import com.example.tesi.service.ProdottoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,10 +34,10 @@ public class ProdottoController {
 		if (result!=null) {
 			logger.log(Level.INFO, "ADD SUCCESSFUL");
 			return ResponseEntity.ok(result);
-		} else {
-			logger.log(Level.INFO, "ADD FAILED");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
+
+		logger.log(Level.INFO, "ADD FAILED");
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	}
 
 	@PostMapping("/getAll")
@@ -52,10 +50,10 @@ public class ProdottoController {
 		if (!prodotti.isEmpty()) {
 			logger.log(Level.INFO, "GET ALL PRODOTTO SUCCESSFUL");
 			return ResponseEntity.ok(prodotti);
-		} else {
-			logger.log(Level.INFO, "GET ALL PRODOTTO FAILED");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
+
+		logger.log(Level.INFO, "GET ALL PRODOTTO FAILED");
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	}
 
 	@PostMapping("/getAllNotOwnedBy")
@@ -66,9 +64,20 @@ public class ProdottoController {
 			logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
 			return ResponseEntity.ok(prodotti);
 		}
-		else {
-			logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY FAILED");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+
+		logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY FAILED");
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	}
+
+	@PostMapping("/miPiace")
+	public ResponseEntity<Boolean> miPiace(@RequestBody Long idProdotto) {
+		logger.log(Level.INFO, "MI PIACE STARTED");
+		if (prodottoService.miPiace(idProdotto)) {
+			logger.log(Level.INFO, "MI PIACE SUCCESSFUL");
+			return ResponseEntity.ok(true);
 		}
+		logger.log(Level.INFO, "MI PIACE FAILED");
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+
 	}
 }

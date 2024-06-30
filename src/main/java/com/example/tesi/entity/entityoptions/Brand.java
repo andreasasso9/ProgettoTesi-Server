@@ -10,7 +10,7 @@ public enum Brand implements Option{
     CHANEL("Chanel"),
     HERMES("Hermes"),
     BURBERRY("Burberry"),
-    DOLCE_GABBANA("Dolce & Gabbana"),
+    DOLCE_E_GABBANA("Dolce e Gabbana"),
     FENDI("Fendi"),
     RALPH_LAUREN("Ralph Lauren"),
     TOMMY_HILFIGER("Tommy Hilfiger"),

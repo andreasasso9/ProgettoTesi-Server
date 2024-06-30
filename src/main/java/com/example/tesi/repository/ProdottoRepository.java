@@ -1,7 +1,6 @@
 package com.example.tesi.repository;
 
 import com.example.tesi.entity.Prodotto;
-import com.example.tesi.entity.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
