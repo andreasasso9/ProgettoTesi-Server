@@ -1,5 +1,6 @@
 package com.example.tesi.service;
 
+import com.example.tesi.entity.Prodotto;
 import com.example.tesi.entity.User;
 import com.example.tesi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,18 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User getUserByUsername(String username) {
 		return userRepository.findByUsername(username);
+	}
+
+	@Override
+	public boolean miPiace(UUID idUser, Long idProdotto) {
+		User user=userRepository.findById(idUser).orElse(null);
+		Prodotto prodotto=new Prodotto();
+		prodotto.setId(idProdotto);
+
+		assert user != null;
+		user.getProdottiPreferiti().add(prodotto);
+
+		userRepository.save(user);
+		return true;
 	}
 }

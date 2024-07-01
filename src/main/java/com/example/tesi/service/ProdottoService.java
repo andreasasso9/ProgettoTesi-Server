@@ -14,5 +14,4 @@ public interface ProdottoService {
 	public boolean updateProdotto(Prodotto prodotto);
 	public boolean deleteProdotto(long id);
 	public List<Prodotto> getAllProdottoNotOwnedBy(User user, Pageable pageable);
-	public boolean miPiace(Long idProdotto);
 }

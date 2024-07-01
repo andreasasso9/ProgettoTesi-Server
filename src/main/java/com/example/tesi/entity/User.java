@@ -71,13 +71,13 @@ public class User implements Serializable {
 		this.indirizzo = indirizzo;
 	}
 
-//	public List<Prodotto> getProdotti() {
-//		return prodotti;
-//	}
-//
-//	public void setProdotti(List<Prodotto> prodotti) {
-//		this.prodotti = prodotti;
-//	}
+	public Set<Prodotto> getProdottiPreferiti() {
+		return prodottiPreferiti;
+	}
+
+	public void setProdottiPreferiti(Set<Prodotto> prodotti) {
+		this.prodottiPreferiti = prodotti;
+	}
 
 	@Override
 	public String toString() {

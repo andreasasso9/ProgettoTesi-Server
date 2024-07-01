@@ -1,4 +1,5 @@
 package com.example.tesi.service;
+
 import com.example.tesi.entity.Prodotto;
 import com.example.tesi.entity.User;
 import com.example.tesi.repository.ProdottoRepository;
@@ -7,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProdottoServiceImpl implements ProdottoService{
@@ -34,8 +34,15 @@ public class ProdottoServiceImpl implements ProdottoService{
 	}
 
 	@Override
-	public boolean updateProdotto(Prodotto prodotto) {
-		return true;
+	public boolean updateProdotto(Prodotto newProdotto) {
+		//Logger.getGlobal().log(Level.INFO, prodotto.getMiPiace()+"");
+		Prodotto oldProdotto=prodottoRepository.findById(newProdotto.getId()).orElse(null);
+		if(oldProdotto!=null) {
+			oldProdotto.update(newProdotto);
+			prodottoRepository.save(oldProdotto);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -46,20 +53,6 @@ public class ProdottoServiceImpl implements ProdottoService{
 
 	@Override
 	public List<Prodotto> getAllProdottoNotOwnedBy(User user, Pageable pageable) {
-		List<Prodotto> result=prodottoRepository.getAllProdottoNotOwnedBy(user.getId(), pageable);
-		return result;
-	}
-
-	@Override
-	public boolean miPiace(Long idProdotto) {
-		Optional<Prodotto>oldProdotto=prodottoRepository.findById(idProdotto);
-		if (oldProdotto.isPresent()) {
-			Prodotto p=oldProdotto.get();
-			p.setMiPiace(p.getMiPiace()+1);
-			prodottoRepository.save(p);
-			return true;
-		}
-
-		return false;
+		return prodottoRepository.getAllProdottoNotOwnedBy(user.getId(), pageable);
 	}
 }

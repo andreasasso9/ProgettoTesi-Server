@@ -69,15 +69,14 @@ public class ProdottoController {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	}
 
-	@PostMapping("/miPiace")
-	public ResponseEntity<Boolean> miPiace(@RequestBody Long idProdotto) {
-		logger.log(Level.INFO, "MI PIACE STARTED");
-		if (prodottoService.miPiace(idProdotto)) {
-			logger.log(Level.INFO, "MI PIACE SUCCESSFUL");
+	@PostMapping("/update")
+	public ResponseEntity<Boolean> update(@RequestBody Prodotto prodotto) {
+		logger.log(Level.INFO, "UPDATE PRODOTTO STARTED");
+		if (prodottoService.updateProdotto(prodotto)) {
+			logger.log(Level.INFO, "UPDATE SUCCESSFUL");
 			return ResponseEntity.ok(true);
 		}
-		logger.log(Level.INFO, "MI PIACE FAILED");
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
-
+		logger.log(Level.INFO, "UPDATE FAILED");
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	}
 }

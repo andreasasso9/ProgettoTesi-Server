@@ -1,11 +1,14 @@
 package com.example.tesi.control;
 
+import com.example.tesi.entity.Prodotto;
 import com.example.tesi.entity.User;
 import com.example.tesi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,6 +43,13 @@ public class UserController {
 	public ResponseEntity<User> loginUser(@RequestParam("username") String username, @RequestParam("password") String password) {
 		User userToLogin=userService.getUserByUsername(username);
 		return ResponseEntity.ok(userToLogin);
+	}
+
+	@PostMapping("/miPiace")
+	public ResponseEntity<Boolean> miPiace(@RequestParam UUID idUser, @RequestParam Long idProdotto) {
+		if (userService.miPiace(idUser, idProdotto))
+			return ResponseEntity.ok(true);
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
 	}
 
 	//TODO implementare gli altri metodi per user
