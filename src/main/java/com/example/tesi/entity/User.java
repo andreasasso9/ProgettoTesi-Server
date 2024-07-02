@@ -79,6 +79,14 @@ public class User implements Serializable {
 		this.prodottiPreferiti = prodotti;
 	}
 
+	public void update(User user) {
+		this.email = user.getEmail();
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+		this.indirizzo = user.getIndirizzo();
+		this.prodottiPreferiti = user.getProdottiPreferiti();
+	}
+
 	@Override
 	public String toString() {
 		return String.format(Locale.ITALIAN, "%s %s", username, id);

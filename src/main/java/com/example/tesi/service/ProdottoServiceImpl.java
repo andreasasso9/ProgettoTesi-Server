@@ -34,11 +34,11 @@ public class ProdottoServiceImpl implements ProdottoService{
 	}
 
 	@Override
-	public boolean updateProdotto(Prodotto newProdotto) {
+	public boolean updateProdotto(Prodotto updatedProdotto) {
 		//Logger.getGlobal().log(Level.INFO, prodotto.getMiPiace()+"");
-		Prodotto oldProdotto=prodottoRepository.findById(newProdotto.getId()).orElse(null);
+		Prodotto oldProdotto=prodottoRepository.findById(updatedProdotto.getId()).orElse(null);
 		if(oldProdotto!=null) {
-			oldProdotto.update(newProdotto);
+			oldProdotto.update(updatedProdotto);
 			prodottoRepository.save(oldProdotto);
 			return true;
 		}

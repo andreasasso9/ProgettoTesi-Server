@@ -52,5 +52,12 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
 	}
 
+	@PostMapping("/update")
+	public ResponseEntity<Boolean> updateUser(@RequestBody User user) {
+		if (userService.update(user))
+			return ResponseEntity.ok(true);
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+	}
+
 	//TODO implementare gli altri metodi per user
 }

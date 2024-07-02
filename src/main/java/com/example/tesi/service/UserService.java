@@ -10,4 +10,5 @@ public interface UserService {
 	public void deleteUser(UUID id);
 	public User getUserByUsername(String username);
 	public boolean miPiace(UUID idUser, Long idProdotto);
+	public boolean update(User updatedUser);
 }

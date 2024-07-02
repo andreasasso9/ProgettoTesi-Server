@@ -49,4 +49,16 @@ public class UserServiceImpl implements UserService{
 		userRepository.save(user);
 		return true;
 	}
+
+	@Override
+	public boolean update(User updatedUser) {
+		User olduser=userRepository.findById(updatedUser.getId()).orElse(null);
+		if (olduser != null) {
+			olduser.update(updatedUser);
+			userRepository.save(olduser);
+			return true;
+		}
+
+		return false;
+	}
 }
