@@ -1,8 +1,6 @@
 package com.example.tesi.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
@@ -12,6 +10,7 @@ public class Notifica {
 	private Long id;
 	private UUID sender, receiver;
 	private String descrizione;
+	@Lob @Column(columnDefinition = "MEDIUMBLOB")
 	private byte[] foto;
 
 	public Notifica() {}
