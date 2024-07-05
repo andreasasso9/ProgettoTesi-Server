@@ -6,6 +6,7 @@ import com.example.tesi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -18,8 +19,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User getUserById(UUID userId) {
-		return userRepository.findById(userId).orElse(null);
+	public User findUserById(UUID userId) {
+		Optional<User> user=userRepository.findById(userId);
+		if (user.isPresent())
+			return user.get();
+		return null;
 	}
 
 	@Override

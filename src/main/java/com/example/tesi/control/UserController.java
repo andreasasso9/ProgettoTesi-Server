@@ -59,5 +59,13 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
 	}
 
+	@PostMapping("/findUserById")
+	public ResponseEntity<User> findUserById(@RequestBody UUID id) {
+		User user=userService.findUserById(id);
+		if (user!=null)
+			return ResponseEntity.ok(user);
+		return ResponseEntity.notFound().build();
+	}
+
 	//TODO implementare gli altri metodi per user
 }
