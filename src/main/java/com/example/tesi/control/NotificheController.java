@@ -1,8 +1,16 @@
 package com.example.tesi.control;
 
+import com.example.tesi.entity.FotoByteArray;
 import com.example.tesi.entity.Notifica;
+import com.example.tesi.entity.Prodotto;
+import com.example.tesi.entity.User;
+import com.example.tesi.service.FotoProdottoService;
 import com.example.tesi.service.NotificheService;
+import com.example.tesi.service.ProdottoService;
+import com.example.tesi.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,25 +23,42 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/notifiche")
 public class NotificheController {
-	private NotificheService notificheService;
+	private final NotificheService notificheService;
+	private final ProdottoService prodottoService;
+	private final UserService userService;
+	private final FotoProdottoService fotoProdottoService;
 
 	@Autowired
-	public NotificheController(NotificheService notificheService) {
+	public NotificheController(NotificheService notificheService, ProdottoService prodottoService, UserService userService, FotoProdottoService fotoProdottoService) {
 		this.notificheService = notificheService;
+		this.prodottoService = prodottoService;
+		this.userService = userService;
+		this.fotoProdottoService = fotoProdottoService;
 	}
 
-	@PostMapping("/save")
-	public ResponseEntity<Boolean> save(@RequestBody Notifica notifica) {
-		notificheService.save(notifica);
-		return ResponseEntity.ok(true);
+	public void miPiace(UUID idSender, Long idProdotto) {
+		User sender=userService.findUserById(idSender);
+		Prodotto prodotto=prodottoService.findProdottoById(idProdotto);
+		FotoByteArray foto=fotoProdottoService.findByProdotto(prodotto).getFirst();
+
+		String descrizione=String.format("%s ha messo mi piace al tuo articolo %s", sender.getUsername(), prodotto.getTitolo());
+
+		notificheService.save(new Notifica(idSender, prodotto.getIdProprietario(), descrizione, foto.getValue()));
 	}
 
-	@PostMapping("/findByReceiver")
-	public ResponseEntity<List<Notifica>> findByReceiver(@RequestBody UUID receiver) {
-		List<Notifica> notifiche = notificheService.findByReceiver(receiver);
+	@PostMapping("/findByIdReceiver")
+	public ResponseEntity<List<Notifica>> findByIdreceiver(@RequestBody UUID receiver) {
+		List<Notifica> notifiche=notificheService.findByReceiver(receiver);
+
 		if (!notifiche.isEmpty())
 			return ResponseEntity.ok(notifiche);
 		return ResponseEntity.notFound().build();
+	}
 
+	@PostMapping("/delete")
+	public ResponseEntity<Boolean> delete(@RequestBody String descrizione) {
+		if (notificheService.delete(descrizione.replace("\"", ""))==0)
+			return ResponseEntity.ok(true);
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 }

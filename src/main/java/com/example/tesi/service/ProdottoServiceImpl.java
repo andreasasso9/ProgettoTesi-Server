@@ -19,7 +19,7 @@ public class ProdottoServiceImpl implements ProdottoService{
 	}
 
 	@Override
-	public Prodotto getProdottoById(long id) {
+	public Prodotto findProdottoById(long id) {
 		return prodottoRepository.findById(id).orElse(null);
 	}
 

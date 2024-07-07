@@ -8,4 +8,5 @@ import java.util.UUID;
 public interface NotificheService {
 	public boolean save(Notifica notifica);
 	public List<Notifica> findByReceiver(UUID receiver);
+	public int delete(String descrizione);
 }

@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ProdottoService {
-	public Prodotto getProdottoById(long id);
+	public Prodotto findProdottoById(long id);
 	public List<Prodotto> getAllProdotto();
 	public Prodotto addProdotto(Prodotto prodotto);
 	public boolean updateProdotto(Prodotto prodotto);

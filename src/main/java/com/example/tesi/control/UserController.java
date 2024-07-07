@@ -1,7 +1,10 @@
 package com.example.tesi.control;
 
+import com.example.tesi.entity.Notifica;
 import com.example.tesi.entity.Prodotto;
 import com.example.tesi.entity.User;
+import com.example.tesi.service.NotificheService;
+import com.example.tesi.service.ProdottoService;
 import com.example.tesi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +20,14 @@ import java.util.logging.Logger;
 public class UserController {
 	private final UserService userService;
 	private final Logger logger;
+	private final NotificheController notificheController;
+
 
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, NotificheController notificheController) {
 		this.userService = userService;
 		logger = Logger.getLogger(this.getClass().getName());
+		this.notificheController = notificheController;
 	}
 
 	@PostMapping("/save")
@@ -47,8 +53,11 @@ public class UserController {
 
 	@PostMapping("/miPiace")
 	public ResponseEntity<Boolean> miPiace(@RequestParam UUID idUser, @RequestParam Long idProdotto) {
-		if (userService.miPiace(idUser, idProdotto))
+		if (userService.miPiace(idUser, idProdotto)) {
+			notificheController.miPiace(idUser, idProdotto);
+
 			return ResponseEntity.ok(true);
+		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
 	}
 
