@@ -12,5 +12,7 @@ import java.util.UUID;
 @Repository
 public interface ProdottoRepository extends JpaRepository<Prodotto, Long> {
 	@Query(value = "select p from Prodotto p where p.idProprietario != ?1")
-	public List<Prodotto> getAllProdottoNotOwnedBy(UUID idUser, Pageable pageable);
+	List<Prodotto> getAllProdottoNotOwnedBy(UUID idUser, Pageable pageable);
+
+	List<Prodotto> findByIdProprietario(UUID idProprietario);
 }

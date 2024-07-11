@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -78,5 +79,16 @@ public class ProdottoController {
 		}
 		logger.log(Level.INFO, "UPDATE FAILED");
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	}
+
+	@PostMapping("/findByIdProprietario")
+	public ResponseEntity<List<Prodotto>> findByIdProprietario(@RequestBody UUID user) {
+		List<Prodotto> prodotti=prodottoService.findByIdProprietario(user);
+		if (prodotti!=null && !prodotti.isEmpty()) {
+			logger.log(Level.INFO, "GET ALL PRODOTTO SUCCESSFUL");
+			return ResponseEntity.ok(prodotti);
+		}
+		logger.log(Level.INFO, "GET ALL PRODOTTO FAILED");
+		return ResponseEntity.notFound().build();
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProdottoServiceImpl implements ProdottoService{
@@ -54,5 +55,10 @@ public class ProdottoServiceImpl implements ProdottoService{
 	@Override
 	public List<Prodotto> getAllProdottoNotOwnedBy(User user, Pageable pageable) {
 		return prodottoRepository.getAllProdottoNotOwnedBy(user.getId(), pageable);
+	}
+
+	@Override
+	public List<Prodotto> findByIdProprietario(UUID idProprietario) {
+		return prodottoRepository.findByIdProprietario(idProprietario);
 	}
 }

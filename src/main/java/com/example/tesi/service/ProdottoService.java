@@ -6,12 +6,14 @@ import com.example.tesi.entity.User;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ProdottoService {
-	public Prodotto findProdottoById(long id);
-	public List<Prodotto> getAllProdotto();
-	public Prodotto addProdotto(Prodotto prodotto);
-	public boolean updateProdotto(Prodotto prodotto);
-	public boolean deleteProdotto(long id);
-	public List<Prodotto> getAllProdottoNotOwnedBy(User user, Pageable pageable);
+	Prodotto findProdottoById(long id);
+	List<Prodotto> getAllProdotto();
+	Prodotto addProdotto(Prodotto prodotto);
+	boolean updateProdotto(Prodotto prodotto);
+	boolean deleteProdotto(long id);
+	List<Prodotto> getAllProdottoNotOwnedBy(User user, Pageable pageable);
+	List<Prodotto> findByIdProprietario(UUID idProprietario);
 }
