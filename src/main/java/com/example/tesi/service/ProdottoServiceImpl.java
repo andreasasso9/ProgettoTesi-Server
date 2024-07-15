@@ -61,4 +61,9 @@ public class ProdottoServiceImpl implements ProdottoService{
 	public List<Prodotto> findByIdProprietario(UUID idProprietario) {
 		return prodottoRepository.findByIdProprietario(idProprietario);
 	}
+
+	@Override
+	public List<Prodotto> findByTitoloODescrizione(UUID user, String text) {
+		return prodottoRepository.findByTitoloODescrizione(user, text);
+	}
 }

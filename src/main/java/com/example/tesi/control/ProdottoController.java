@@ -91,4 +91,16 @@ public class ProdottoController {
 		logger.log(Level.INFO, "GET ALL PRODOTTO FAILED");
 		return ResponseEntity.notFound().build();
 	}
+
+	@PostMapping("/findByTitoloODescrizione")
+	public ResponseEntity<List<Prodotto>> findByTitoloODescrizione(@RequestParam UUID user, @RequestParam String text) {
+		List<Prodotto> prodotti=prodottoService.findByTitoloODescrizione(user, text.replace("\"", ""));
+		if (prodotti!=null) {
+			logger.log(Level.INFO, "GET PRODOTTO BY TITOLO O DESCRIZIONE SUCCESSFUL");
+			return ResponseEntity.ok(prodotti);
+		} else {
+			logger.log(Level.INFO, "GET PRODOTTO BY TITOLO O DESCRIZIONE FALIED");
+			return ResponseEntity.internalServerError().build();
+		}
+	}
 }

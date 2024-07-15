@@ -15,4 +15,7 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Long> {
 	List<Prodotto> getAllProdottoNotOwnedBy(UUID idUser, Pageable pageable);
 
 	List<Prodotto> findByIdProprietario(UUID idProprietario);
+
+	@Query("select distinct p from Prodotto p where p.idProprietario!=?1 and (p.titolo like %?2% or p.descrizione like %?2%) order by p.miPiace")
+	List<Prodotto> findByTitoloODescrizione(UUID user, String text);
 }
