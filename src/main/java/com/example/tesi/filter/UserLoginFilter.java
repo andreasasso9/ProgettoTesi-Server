@@ -37,6 +37,7 @@ public class UserLoginFilter extends OncePerRequestFilter {
 
 		if (user!=null && user.getPassword().equals(password)) {
 			logger.log(Level.INFO, "Login successful");
+			request.setAttribute("user", user);
 			filterChain.doFilter(request, response);
 		} else
 			logger.log(Level.INFO, "Login failed");

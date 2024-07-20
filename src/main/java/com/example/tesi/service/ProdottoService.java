@@ -17,5 +17,5 @@ public interface ProdottoService {
 	boolean deleteProdotto(long id);
 	List<Prodotto> getAllProdottoNotOwnedBy(User user, Pageable pageable);
 	List<Prodotto> findByIdProprietario(UUID idProprietario);
-	List<Prodotto> findByTitoloODescrizione(UUID user, String text);
+	List<Prodotto> findByRicerca(UUID user, String text);
 }

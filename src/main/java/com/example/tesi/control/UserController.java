@@ -6,7 +6,9 @@ import com.example.tesi.entity.User;
 import com.example.tesi.service.NotificheService;
 import com.example.tesi.service.ProdottoService;
 import com.example.tesi.service.UserService;
+import jakarta.servlet.ServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,19 +17,23 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static javax.swing.text.html.CSS.getAttribute;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
 	private final UserService userService;
 	private final Logger logger;
 	private final NotificheController notificheController;
+	private final ServletRequest httpServletRequest;
 
 
 	@Autowired
-	public UserController(UserService userService, NotificheController notificheController) {
+	public UserController(UserService userService, NotificheController notificheController, @Qualifier("httpServletRequest") ServletRequest httpServletRequest) {
 		this.userService = userService;
 		logger = Logger.getLogger(this.getClass().getName());
 		this.notificheController = notificheController;
+		this.httpServletRequest = httpServletRequest;
 	}
 
 	@PostMapping("/save")
@@ -46,9 +52,9 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<User> loginUser(@RequestParam("username") String username, @RequestParam("password") String password) {
-		User userToLogin=userService.getUserByUsername(username);
-		return ResponseEntity.ok(userToLogin);
+	public ResponseEntity<User> loginUser(@RequestAttribute Object user) {
+		User u= (User) user;
+		return ResponseEntity.ok(u);
 	}
 
 	@PostMapping("/miPiace")

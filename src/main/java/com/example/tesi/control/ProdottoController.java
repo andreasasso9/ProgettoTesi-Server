@@ -92,9 +92,9 @@ public class ProdottoController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@PostMapping("/findByTitoloODescrizione")
-	public ResponseEntity<List<Prodotto>> findByTitoloODescrizione(@RequestParam UUID user, @RequestParam String text) {
-		List<Prodotto> prodotti=prodottoService.findByTitoloODescrizione(user, text.replace("\"", ""));
+	@PostMapping("/findByRicerca")
+	public ResponseEntity<List<Prodotto>> findByRicerca(@RequestParam UUID user, @RequestParam String text) {
+		List<Prodotto> prodotti=prodottoService.findByRicerca(user, text.replace("\"", ""));
 		if (prodotti!=null) {
 			logger.log(Level.INFO, "GET PRODOTTO BY TITOLO O DESCRIZIONE SUCCESSFUL");
 			return ResponseEntity.ok(prodotti);
