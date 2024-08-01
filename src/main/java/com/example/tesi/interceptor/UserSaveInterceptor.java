@@ -3,7 +3,6 @@ package com.example.tesi.interceptor;
 import com.example.tesi.utility.PasswordEncrypter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 

@@ -18,7 +18,7 @@ public class User implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	private String indirizzo;
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Prodotto> prodottiPreferiti;
 
 	public User(){}
@@ -80,11 +80,11 @@ public class User implements Serializable {
 	}
 
 	public void update(User user) {
-		this.email = user.getEmail();
-		this.username = user.getUsername();
-		this.password = user.getPassword();
-		this.indirizzo = user.getIndirizzo();
-		this.prodottiPreferiti = user.getProdottiPreferiti();
+		this.email = user.email;
+		this.username = user.username;
+		this.password = user.password;
+		this.indirizzo = user.indirizzo;
+		this.prodottiPreferiti = user.prodottiPreferiti;
 	}
 
 	@Override

@@ -2,8 +2,6 @@ package com.example.tesi.service;
 
 import com.example.tesi.entity.Prodotto;
 import com.example.tesi.entity.User;
-import com.example.tesi.entity.entityoptions.Brand;
-import com.example.tesi.entity.entityoptions.Categoria;
 import com.example.tesi.repository.ProdottoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -67,5 +65,10 @@ public class ProdottoServiceImpl implements ProdottoService{
 	@Override
 	public List<Prodotto> findByRicerca(UUID user, String text) {
 		return prodottoRepository.findByRicerca(user, text);
+	}
+
+	@Override
+	public List<Prodotto> findByCompratore(UUID idCompratore) {
+		return prodottoRepository.findByIdCompratore(idCompratore);
 	}
 }

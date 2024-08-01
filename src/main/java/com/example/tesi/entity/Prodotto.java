@@ -23,8 +23,7 @@ public class Prodotto implements Serializable {
 	private Long id;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FotoByteArray> foto;
-	@OneToOne
-	private User compratore;
+	private UUID idCompratore;
 
 	public Prodotto(UUID idProprietario, String titolo, String descrizione, Categoria categoria, Brand brand, Condizioni condizioni, double prezzo) {
 		this.idProprietario = idProprietario;
@@ -35,7 +34,7 @@ public class Prodotto implements Serializable {
 		this.condizioni = condizioni;
 		this.prezzo = prezzo;
 		this.miPiace = 0;
-		compratore=null;
+		idCompratore=null;
 	}
 
 	public Prodotto() {}
@@ -109,20 +108,25 @@ public class Prodotto implements Serializable {
 	}
 
 	public void update(Prodotto newProdotto) {
-		titolo = newProdotto.getTitolo();
-		descrizione = newProdotto.getDescrizione();
-		categoria = newProdotto.getCategoria();
-		brand = newProdotto.getBrand();
-		condizioni = newProdotto.getCondizioni();
-		prezzo = newProdotto.getPrezzo();
-		miPiace = newProdotto.getMiPiace();
+		titolo = newProdotto.titolo;
+		descrizione = newProdotto.descrizione;
+		categoria = newProdotto.categoria;
+		brand = newProdotto.brand;
+		condizioni = newProdotto.condizioni;
+		prezzo = newProdotto.prezzo;
+		miPiace = newProdotto.miPiace;
+		idCompratore = newProdotto.idCompratore;
 	}
 
-	public void setCompratore(User compratore) {
-		this.compratore = compratore;
+	public void setIdCompratore(UUID compratore) {
+		this.idCompratore = compratore;
 	}
 
-	public User getCompratore() {
-		return compratore;
+	public UUID getIdCompratore() {
+		return idCompratore;
+	}
+
+	public boolean isBought() {
+		return idCompratore!=null;
 	}
 }

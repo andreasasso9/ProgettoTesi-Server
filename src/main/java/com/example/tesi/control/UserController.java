@@ -1,10 +1,6 @@
 package com.example.tesi.control;
 
-import com.example.tesi.entity.Notifica;
-import com.example.tesi.entity.Prodotto;
 import com.example.tesi.entity.User;
-import com.example.tesi.service.NotificheService;
-import com.example.tesi.service.ProdottoService;
 import com.example.tesi.service.UserService;
 import jakarta.servlet.ServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static javax.swing.text.html.CSS.getAttribute;
 
 @RestController
 @RequestMapping("/users")

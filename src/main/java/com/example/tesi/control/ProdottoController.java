@@ -85,10 +85,10 @@ public class ProdottoController {
 	public ResponseEntity<List<Prodotto>> findByIdProprietario(@RequestBody UUID user) {
 		List<Prodotto> prodotti=prodottoService.findByIdProprietario(user);
 		if (prodotti!=null && !prodotti.isEmpty()) {
-			logger.log(Level.INFO, "GET ALL PRODOTTO SUCCESSFUL");
+			logger.log(Level.INFO, "FIND BY PROPRIETARIO SUCCESSFUL");
 			return ResponseEntity.ok(prodotti);
 		}
-		logger.log(Level.INFO, "GET ALL PRODOTTO FAILED");
+		logger.log(Level.INFO, "FIND BY PROPRIETARIO FAILED");
 		return ResponseEntity.notFound().build();
 	}
 
@@ -96,10 +96,22 @@ public class ProdottoController {
 	public ResponseEntity<List<Prodotto>> findByRicerca(@RequestParam UUID user, @RequestParam String text) {
 		List<Prodotto> prodotti=prodottoService.findByRicerca(user, text.replace("\"", ""));
 		if (prodotti!=null) {
-			logger.log(Level.INFO, "GET PRODOTTO BY TITOLO O DESCRIZIONE SUCCESSFUL");
+			logger.log(Level.INFO, "FIND PRODOTTO BY TITOLO O DESCRIZIONE SUCCESSFUL");
 			return ResponseEntity.ok(prodotti);
 		} else {
-			logger.log(Level.INFO, "GET PRODOTTO BY TITOLO O DESCRIZIONE FALIED");
+			logger.log(Level.INFO, "FIND PRODOTTO BY TITOLO O DESCRIZIONE FALIED");
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+
+	@PostMapping("/findByCompratore")
+	public ResponseEntity<List<Prodotto>> findByCompratore(@RequestBody UUID idCompratore) {
+		List<Prodotto> prodotti=prodottoService.findByCompratore(idCompratore);
+		if (prodotti!=null) {
+			logger.log(Level.INFO, "FIND PRODOTTO BY COMPRATORE SUCCESSFUL");
+			return ResponseEntity.ok(prodotti);
+		} else {
+			logger.log(Level.INFO, "FIND PRODOTTO BY COMPRATORE FAILED");
 			return ResponseEntity.internalServerError().build();
 		}
 	}

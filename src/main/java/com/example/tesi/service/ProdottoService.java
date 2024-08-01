@@ -4,7 +4,6 @@ package com.example.tesi.service;
 import com.example.tesi.entity.Prodotto;
 import com.example.tesi.entity.User;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,4 +17,5 @@ public interface ProdottoService {
 	List<Prodotto> getAllProdottoNotOwnedBy(User user, Pageable pageable);
 	List<Prodotto> findByIdProprietario(UUID idProprietario);
 	List<Prodotto> findByRicerca(UUID user, String text);
+	List<Prodotto> findByCompratore(UUID idCompratore);
 }
