@@ -18,7 +18,7 @@ public class User implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	private String indirizzo;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<Prodotto> prodottiPreferiti;
 
 	public User(){}
