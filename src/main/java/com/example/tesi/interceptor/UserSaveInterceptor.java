@@ -1,6 +1,6 @@
 package com.example.tesi.interceptor;
 
-import com.example.tesi.utility.PasswordEncrypter;
+import com.example.tesi.utils.PasswordEncrypter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;

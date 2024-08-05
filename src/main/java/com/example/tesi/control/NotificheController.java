@@ -12,10 +12,7 @@ import com.example.tesi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -58,6 +55,13 @@ public class NotificheController {
 	@PostMapping("/delete")
 	public ResponseEntity<Boolean> delete(@RequestBody String descrizione) {
 		if (notificheService.delete(descrizione.replace("\"", ""))==0)
+			return ResponseEntity.ok(true);
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	}
+
+	@PostMapping("/save")
+	public ResponseEntity<Boolean> save(@RequestBody Notifica notifica) {
+		if (notificheService.save(notifica))
 			return ResponseEntity.ok(true);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}

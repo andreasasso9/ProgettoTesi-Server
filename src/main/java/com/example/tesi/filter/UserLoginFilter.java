@@ -2,7 +2,7 @@ package com.example.tesi.filter;
 
 import com.example.tesi.entity.User;
 import com.example.tesi.service.UserService;
-import com.example.tesi.utility.PasswordEncrypter;
+import com.example.tesi.utils.PasswordEncrypter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

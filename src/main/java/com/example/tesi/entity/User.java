@@ -3,10 +3,7 @@ package com.example.tesi.entity;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 public class User implements Serializable {

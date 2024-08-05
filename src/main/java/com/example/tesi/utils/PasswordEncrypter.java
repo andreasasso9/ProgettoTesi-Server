@@ -1,4 +1,4 @@
-package com.example.tesi.utility;
+package com.example.tesi.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

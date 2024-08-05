@@ -2,9 +2,7 @@ package com.example.tesi.control;
 
 import com.example.tesi.entity.User;
 import com.example.tesi.service.UserService;
-import jakarta.servlet.ServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +17,15 @@ public class UserController {
 	private final UserService userService;
 	private final Logger logger;
 	private final NotificheController notificheController;
-	private final ServletRequest httpServletRequest;
+	private final ProdottoController prodottoController;
 
 
 	@Autowired
-	public UserController(UserService userService, NotificheController notificheController, @Qualifier("httpServletRequest") ServletRequest httpServletRequest) {
+	public UserController(UserService userService, NotificheController notificheController, ProdottoController prodottoController) {
 		this.userService = userService;
 		logger = Logger.getLogger(this.getClass().getName());
 		this.notificheController = notificheController;
-		this.httpServletRequest = httpServletRequest;
+		this.prodottoController = prodottoController;
 	}
 
 	@PostMapping("/save")
