@@ -1,0 +1,27 @@
+package com.example.tesi.chat;
+
+import java.io.Serializable;
+import java.util.UUID;
+
+public class Text implements Serializable {
+	private final String text;
+	private final String sender, receiver;
+
+	public Text(String text, String idSender, String idReceiver) {
+		this.text = text;
+		this.sender = idSender;
+		this.receiver = idReceiver;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public String getSender() {
+		return sender;
+	}
+
+	public String getReceiver() {
+		return receiver;
+	}
+}
