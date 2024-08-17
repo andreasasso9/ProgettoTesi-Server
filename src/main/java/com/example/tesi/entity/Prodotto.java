@@ -18,15 +18,15 @@ public class Prodotto implements Serializable {
 	private Condizioni condizioni;
 	private double prezzo;
 	private int miPiace;
-	private UUID idProprietario;
+	private String proprietario;
 	@Id @GeneratedValue
 	private Long id;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FotoByteArray> foto;
-	private UUID idCompratore;
+	private String compratore;
 
-	public Prodotto(UUID idProprietario, String titolo, String descrizione, Categoria categoria, Brand brand, Condizioni condizioni, double prezzo) {
-		this.idProprietario = idProprietario;
+	public Prodotto(String proprietario, String titolo, String descrizione, Categoria categoria, Brand brand, Condizioni condizioni, double prezzo) {
+		this.proprietario = proprietario;
 		this.titolo = titolo;
 		this.descrizione = descrizione;
 		this.categoria = categoria;
@@ -34,13 +34,12 @@ public class Prodotto implements Serializable {
 		this.condizioni = condizioni;
 		this.prezzo = prezzo;
 		this.miPiace = 0;
-		idCompratore=null;
 	}
 
 	public Prodotto() {}
 
-	public UUID getIdProprietario() {
-		return idProprietario;
+	public String getProprietario() {
+		return proprietario;
 	}
 
 	public String getTitolo() {
@@ -115,18 +114,18 @@ public class Prodotto implements Serializable {
 		condizioni = newProdotto.condizioni;
 		prezzo = newProdotto.prezzo;
 		miPiace = newProdotto.miPiace;
-		idCompratore = newProdotto.idCompratore;
+		compratore = newProdotto.compratore;
 	}
 
-	public void setIdCompratore(UUID compratore) {
-		this.idCompratore = compratore;
+	public void setIdCompratore(String compratore) {
+		this.compratore = compratore;
 	}
 
-	public UUID getIdCompratore() {
-		return idCompratore;
+	public String getCompratore() {
+		return compratore;
 	}
 
 	public boolean isBought() {
-		return idCompratore!=null;
+		return compratore!=null;
 	}
 }

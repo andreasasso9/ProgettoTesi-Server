@@ -7,17 +7,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 public interface ProdottoRepository extends JpaRepository<Prodotto, Long> {
-	@Query(value = "select distinct p from Prodotto p where p.idProprietario != ?1 and p.idCompratore is null order by p.miPiace desc")
-	List<Prodotto> getAllProdottoNotOwnedBy(UUID idUser, Pageable pageable);
+	@Query(value = "select distinct p from Prodotto p where p.proprietario != ?1 and p.compratore is null order by p.miPiace desc")
+	List<Prodotto> getAllProdottoNotOwnedBy(String proprietario, Pageable pageable);
 
-	List<Prodotto> findByIdProprietario(UUID idProprietario);
+	List<Prodotto> findByProprietario(String proprietario);
 
-	@Query("select distinct p from Prodotto p where p.idProprietario!=?1 and (p.titolo like %?2% or p.descrizione like %?2%) and p.idCompratore is null order by p.miPiace")
-	List<Prodotto> findByRicerca(UUID user, String text);
+	@Query("select distinct p from Prodotto p where p.proprietario!=?1 and (p.titolo like %?2% or p.descrizione like %?2%) and p.compratore is null order by p.miPiace")
+	List<Prodotto> findByRicerca(String currentUser, String text);
 
-	List<Prodotto> findByIdCompratore(UUID idCompratore);
+	List<Prodotto> findByCompratore(String compratore);
 }

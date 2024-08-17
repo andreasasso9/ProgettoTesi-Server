@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class NotificheServiceImpl implements NotificheService{
-	private NotificheRepository notificheRepository;
+	private final NotificheRepository notificheRepository;
 
 	@Autowired
 	public NotificheServiceImpl(NotificheRepository notificheRepository) {
@@ -25,7 +24,7 @@ public class NotificheServiceImpl implements NotificheService{
 	}
 
 	@Override
-	public List<Notifica> findByReceiver(UUID receiver) {
+	public List<Notifica> findByReceiver(String receiver) {
 		return notificheRepository.findByReceiver(receiver);
 	}
 

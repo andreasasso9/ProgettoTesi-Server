@@ -1,7 +1,6 @@
 package com.example.tesi.control;
 
 import com.example.tesi.entity.Prodotto;
-import com.example.tesi.entity.User;
 import com.example.tesi.service.ProdottoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,9 +56,9 @@ public class ProdottoController {
 	}
 
 	@PostMapping("/getAllNotOwnedBy")
-	public ResponseEntity<List<Prodotto>> getAllNotOwnedBy(@RequestBody User user) {
+	public ResponseEntity<List<Prodotto>> getAllNotOwnedBy(@RequestBody String user) {
 		Pageable pageable= PageRequest.of(0, PAGE_LIMIT);
-		List<Prodotto> prodotti=prodottoService.getAllProdottoNotOwnedBy(user, pageable);
+		List<Prodotto> prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable);
 		if (prodotti!=null && !prodotti.isEmpty()) {
 			logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
 			return ResponseEntity.ok(prodotti);
@@ -82,8 +80,8 @@ public class ProdottoController {
 	}
 
 	@PostMapping("/findByIdProprietario")
-	public ResponseEntity<List<Prodotto>> findByIdProprietario(@RequestBody UUID user) {
-		List<Prodotto> prodotti=prodottoService.findByIdProprietario(user);
+	public ResponseEntity<List<Prodotto>> findByIdProprietario(@RequestBody String user) {
+		List<Prodotto> prodotti=prodottoService.findByProprietario(user.replace("\"", ""));
 		if (prodotti!=null && !prodotti.isEmpty()) {
 			logger.log(Level.INFO, "FIND BY PROPRIETARIO SUCCESSFUL");
 			return ResponseEntity.ok(prodotti);
@@ -93,8 +91,8 @@ public class ProdottoController {
 	}
 
 	@PostMapping("/findByRicerca")
-	public ResponseEntity<List<Prodotto>> findByRicerca(@RequestParam UUID user, @RequestParam String text) {
-		List<Prodotto> prodotti=prodottoService.findByRicerca(user, text.replace("\"", ""));
+	public ResponseEntity<List<Prodotto>> findByRicerca(@RequestParam String user, @RequestParam String text) {
+		List<Prodotto> prodotti=prodottoService.findByRicerca(user.replace("\"", ""), text.replace("\"", ""));
 		if (prodotti!=null) {
 			logger.log(Level.INFO, "FIND PRODOTTO BY TITOLO O DESCRIZIONE SUCCESSFUL");
 			return ResponseEntity.ok(prodotti);
@@ -105,8 +103,8 @@ public class ProdottoController {
 	}
 
 	@PostMapping("/findByCompratore")
-	public ResponseEntity<List<Prodotto>> findByCompratore(@RequestBody UUID idCompratore) {
-		List<Prodotto> prodotti=prodottoService.findByCompratore(idCompratore);
+	public ResponseEntity<List<Prodotto>> findByCompratore(@RequestBody String compratore) {
+		List<Prodotto> prodotti=prodottoService.findByCompratore(compratore.replace("\"", ""));
 		if (prodotti!=null) {
 			logger.log(Level.INFO, "FIND PRODOTTO BY COMPRATORE SUCCESSFUL");
 			return ResponseEntity.ok(prodotti);

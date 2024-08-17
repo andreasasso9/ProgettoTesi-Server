@@ -1,7 +1,6 @@
 package com.example.tesi.chat;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 public class Text implements Serializable {
 	private final String text;

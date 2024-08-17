@@ -50,9 +50,9 @@ public class UserController {
 	}
 
 	@PostMapping("/miPiace")
-	public ResponseEntity<Boolean> miPiace(@RequestParam UUID idUser, @RequestParam Long idProdotto) {
-		if (userService.miPiace(idUser, idProdotto)) {
-			notificheController.miPiace(idUser, idProdotto);
+	public ResponseEntity<Boolean> miPiace(@RequestParam String sender, @RequestParam Long idProdotto) {
+		if (userService.miPiace(sender.replace("\"", ""), idProdotto)) {
+			notificheController.miPiace(sender, idProdotto);
 
 			return ResponseEntity.ok(true);
 		}

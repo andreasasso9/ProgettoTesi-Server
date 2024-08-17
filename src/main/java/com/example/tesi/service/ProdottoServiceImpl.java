@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ProdottoServiceImpl implements ProdottoService{
@@ -52,22 +51,22 @@ public class ProdottoServiceImpl implements ProdottoService{
 	}
 
 	@Override
-	public List<Prodotto> getAllProdottoNotOwnedBy(User user, Pageable pageable) {
-		return prodottoRepository.getAllProdottoNotOwnedBy(user.getId(), pageable);
+	public List<Prodotto> getAllProdottoNotOwnedBy(String user, Pageable pageable) {
+		return prodottoRepository.getAllProdottoNotOwnedBy(user, pageable);
 	}
 
 	@Override
-	public List<Prodotto> findByIdProprietario(UUID idProprietario) {
-		return prodottoRepository.findByIdProprietario(idProprietario);
+	public List<Prodotto> findByProprietario(String proprietario) {
+		return prodottoRepository.findByProprietario(proprietario);
 	}
 
 	@Override
-	public List<Prodotto> findByRicerca(UUID user, String text) {
+	public List<Prodotto> findByRicerca(String user, String text) {
 		return prodottoRepository.findByRicerca(user, text);
 	}
 
 	@Override
-	public List<Prodotto> findByCompratore(UUID idCompratore) {
-		return prodottoRepository.findByIdCompratore(idCompratore);
+	public List<Prodotto> findByCompratore(String compratore) {
+		return prodottoRepository.findByCompratore(compratore);
 	}
 }

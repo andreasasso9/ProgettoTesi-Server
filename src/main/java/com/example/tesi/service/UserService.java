@@ -9,6 +9,6 @@ public interface UserService {
 	void saveUser(User user);
 	void deleteUser(UUID id);
 	User getUserByUsername(String username);
-	boolean miPiace(UUID idUser, Long idProdotto);
+	boolean miPiace(String idUser, Long idProdotto);
 	boolean update(User updatedUser);
 }

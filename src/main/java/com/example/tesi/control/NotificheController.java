@@ -3,7 +3,6 @@ package com.example.tesi.control;
 import com.example.tesi.entity.FotoByteArray;
 import com.example.tesi.entity.Notifica;
 import com.example.tesi.entity.Prodotto;
-import com.example.tesi.entity.User;
 import com.example.tesi.service.FotoProdottoService;
 import com.example.tesi.service.NotificheService;
 import com.example.tesi.service.ProdottoService;
@@ -15,37 +14,33 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/notifiche")
 public class NotificheController {
 	private final NotificheService notificheService;
 	private final ProdottoService prodottoService;
-	private final UserService userService;
 	private final FotoProdottoService fotoProdottoService;
 
 	@Autowired
 	public NotificheController(NotificheService notificheService, ProdottoService prodottoService, UserService userService, FotoProdottoService fotoProdottoService) {
 		this.notificheService = notificheService;
 		this.prodottoService = prodottoService;
-		this.userService = userService;
 		this.fotoProdottoService = fotoProdottoService;
 	}
 
-	public void miPiace(UUID idSender, Long idProdotto) {
-		User sender=userService.findUserById(idSender);
+	public void miPiace(String sender, Long idProdotto) {
 		Prodotto prodotto=prodottoService.findProdottoById(idProdotto);
 		FotoByteArray foto=fotoProdottoService.findByProdotto(prodotto).getFirst();
 
-		String descrizione=String.format("%s ha messo mi piace al tuo articolo %s", sender.getUsername(), prodotto.getTitolo());
+		String descrizione=String.format("%s ha messo mi piace al tuo articolo %s", sender, prodotto.getTitolo());
 
-		notificheService.save(new Notifica(idSender, prodotto.getIdProprietario(), descrizione, foto.getValue()));
+		notificheService.save(new Notifica(sender, prodotto.getProprietario(), descrizione, foto.getValue()));
 	}
 
-	@PostMapping("/findByIdReceiver")
-	public ResponseEntity<List<Notifica>> findByIdreceiver(@RequestBody UUID receiver) {
-		List<Notifica> notifiche=notificheService.findByReceiver(receiver);
+	@PostMapping("/findByReceiver")
+	public ResponseEntity<List<Notifica>> findByReceiver(@RequestBody String receiver) {
+		List<Notifica> notifiche=notificheService.findByReceiver(receiver.replace("\"", ""));
 
 		if (!notifiche.isEmpty())
 			return ResponseEntity.ok(notifiche);

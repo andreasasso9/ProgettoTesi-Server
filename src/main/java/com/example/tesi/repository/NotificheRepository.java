@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Repository
 public interface NotificheRepository extends JpaRepository<Notifica, Long> {
-	public List<Notifica> findByReceiver(UUID receiver);
+	public List<Notifica> findByReceiver(String receiver);
 
 	@Modifying
 	@Transactional

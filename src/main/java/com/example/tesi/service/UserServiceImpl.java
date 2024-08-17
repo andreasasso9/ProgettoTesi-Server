@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean miPiace(UUID idUser, Long idProdotto) {
-		User user=userRepository.findById(idUser).orElse(null);
+	public boolean miPiace(String username, Long idProdotto) {
+		User user=userRepository.findByUsername(username);
 		Prodotto prodotto=new Prodotto();
 		prodotto.setId(idProdotto);
 

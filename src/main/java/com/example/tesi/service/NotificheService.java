@@ -7,6 +7,6 @@ import java.util.UUID;
 
 public interface NotificheService {
 	boolean save(Notifica notifica);
-	List<Notifica> findByReceiver(UUID receiver);
+	List<Notifica> findByReceiver(String receiver);
 	int delete(String descrizione);
 }
