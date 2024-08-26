@@ -8,7 +8,6 @@ public class Text {
 	private String text;
 	private String sender, receiver;
 	protected boolean delivered;
-
 	@Id
 	@GeneratedValue
 	private Long id;
