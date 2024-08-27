@@ -17,7 +17,6 @@ public class UserController {
 	private final UserService userService;
 	private final Logger logger;
 	private final NotificheController notificheController;
-	private final ProdottoController prodottoController;
 
 
 	@Autowired
@@ -25,7 +24,6 @@ public class UserController {
 		this.userService = userService;
 		logger = Logger.getLogger(this.getClass().getName());
 		this.notificheController = notificheController;
-		this.prodottoController = prodottoController;
 	}
 
 	@PostMapping("/save")
@@ -73,6 +71,4 @@ public class UserController {
 			return ResponseEntity.ok(user);
 		return ResponseEntity.notFound().build();
 	}
-
-	//TODO implementare gli altri metodi per user
 }
