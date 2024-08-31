@@ -28,6 +28,7 @@ public class FotoProdottoController {
 	@PostMapping("/addFoto")
 	public ResponseEntity<Boolean> addFotoProdotto(@RequestBody List<FotoByteArray> foto) {
 		Logger.getGlobal().log(Level.INFO, "ADD FOTO STARTED");
+		fotoProdottoService.deleteByProdotto(foto.getFirst().getProdotto());
 		foto.forEach(fotoProdottoService::save);
 		Logger.getGlobal().log(Level.INFO, "FOTO ADDED");
 		return ResponseEntity.ok(true);

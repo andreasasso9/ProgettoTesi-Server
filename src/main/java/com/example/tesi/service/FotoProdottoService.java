@@ -10,4 +10,5 @@ public interface FotoProdottoService {
 	List<FotoByteArray> getAllFotos();
 	boolean save(FotoByteArray foto);
 	List<FotoByteArray> findByProdotto(Prodotto prodotto);
+	void deleteByProdotto(Prodotto prodotto);
 }

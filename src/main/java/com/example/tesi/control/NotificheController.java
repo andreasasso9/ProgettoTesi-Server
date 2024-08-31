@@ -3,10 +3,8 @@ package com.example.tesi.control;
 import com.example.tesi.entity.FotoByteArray;
 import com.example.tesi.entity.Notifica;
 import com.example.tesi.entity.Prodotto;
-import com.example.tesi.service.FotoProdottoService;
-import com.example.tesi.service.NotificheService;
-import com.example.tesi.service.ProdottoService;
-import com.example.tesi.service.UserService;
+import com.example.tesi.entity.Token;
+import com.example.tesi.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/notifiche")
@@ -21,12 +20,16 @@ public class NotificheController {
 	private final NotificheService notificheService;
 	private final ProdottoService prodottoService;
 	private final FotoProdottoService fotoProdottoService;
+	private final PushNotificationService pushNotificationService;
+	private final TokenService tokenService;
 
 	@Autowired
-	public NotificheController(NotificheService notificheService, ProdottoService prodottoService, UserService userService, FotoProdottoService fotoProdottoService) {
+	public NotificheController(NotificheService notificheService, ProdottoService prodottoService, FotoProdottoService fotoProdottoService, PushNotificationService pushNotificationService, TokenService tokenService) {
 		this.notificheService = notificheService;
 		this.prodottoService = prodottoService;
 		this.fotoProdottoService = fotoProdottoService;
+		this.pushNotificationService = pushNotificationService;
+		this.tokenService = tokenService;
 	}
 
 	public void miPiace(String sender, Long idProdotto) {
@@ -36,6 +39,11 @@ public class NotificheController {
 		String descrizione=String.format("%s ha messo mi piace al tuo articolo %s", sender, prodotto.getTitolo());
 
 		notificheService.save(new Notifica(sender, prodotto.getProprietario(), descrizione, foto.getValue()));
+
+		Set<Token> tokens=tokenService.findByUsername(prodotto.getProprietario());
+
+		for (Token t:tokens)
+			pushNotificationService.sendPushNotification(t.getToken(), sender, "Ha messo mi piace al tuo articolo "+prodotto.getTitolo());
 	}
 
 	@PostMapping("/findByReceiver")

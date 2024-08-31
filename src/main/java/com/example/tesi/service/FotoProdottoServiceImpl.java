@@ -33,6 +33,7 @@ public class FotoProdottoServiceImpl implements FotoProdottoService{
 	@Override
 	public boolean save(FotoByteArray foto) {
 		Logger.getGlobal().log(Level.INFO, "SAVING FOTO");
+
 		fotoProdottoRepository.save(foto);
 		Logger.getGlobal().log(Level.INFO, "FOTO SAVED");
 		return true;
@@ -42,4 +43,11 @@ public class FotoProdottoServiceImpl implements FotoProdottoService{
 	public List<FotoByteArray> findByProdotto(Prodotto prodotto) {
 		return fotoProdottoRepository.findByProdotto(prodotto);
 	}
+
+	@Override
+	public void deleteByProdotto(Prodotto prodotto) {
+		fotoProdottoRepository.deleteByProdotto(prodotto);
+	}
+
+
 }
