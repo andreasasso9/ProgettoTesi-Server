@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -60,6 +62,7 @@ public class ProdottoController {
 		Pageable pageable= PageRequest.of(0, PAGE_LIMIT);
 		List<Prodotto> prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable);
 		if (prodotti!=null && !prodotti.isEmpty()) {
+			prodotti.sort(Comparator.comparingInt(Prodotto::getMiPiace));
 			logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
 			return ResponseEntity.ok(prodotti);
 		}
@@ -112,5 +115,17 @@ public class ProdottoController {
 			logger.log(Level.INFO, "FIND PRODOTTO BY COMPRATORE FAILED");
 			return ResponseEntity.internalServerError().build();
 		}
+	}
+
+	@PostMapping("/delete")
+	public ResponseEntity<Void> delete(@RequestBody Long id) {
+		prodottoService.deleteProdotto(id);
+
+		return ResponseEntity.ok(null);
+	}
+
+	@PostMapping("/findByLikedBy")
+	public ResponseEntity<Set<Prodotto>> findByLikedBy(@RequestBody String username) {
+		return ResponseEntity.ok(prodottoService.findByLikedBy(username.replace("\"", "")));
 	}
 }

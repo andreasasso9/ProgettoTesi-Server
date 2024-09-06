@@ -1,12 +1,14 @@
 package com.tesi.service;
 
 import com.tesi.entity.Prodotto;
+import com.tesi.entity.User;
 import com.tesi.repository.ProdottoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProdottoServiceImpl implements ProdottoService{
@@ -44,9 +46,8 @@ public class ProdottoServiceImpl implements ProdottoService{
 	}
 
 	@Override
-	public boolean deleteProdotto(long id) {
+	public void deleteProdotto(long id) {
 		prodottoRepository.deleteById(id);
-		return true;
 	}
 
 	@Override
@@ -67,5 +68,10 @@ public class ProdottoServiceImpl implements ProdottoService{
 	@Override
 	public List<Prodotto> findByCompratore(String compratore) {
 		return prodottoRepository.findByCompratore(compratore);
+	}
+
+	@Override
+	public Set<Prodotto> findByLikedBy(String username) {
+		return prodottoRepository.findByLikedBy(username);
 	}
 }

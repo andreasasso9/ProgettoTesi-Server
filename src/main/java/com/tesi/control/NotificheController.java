@@ -36,9 +36,10 @@ public class NotificheController {
 		this.tokenService = tokenService;
 	}
 
+	@PostMapping("/miPiace")
 	public void miPiace(String sender, Long idProdotto) {
 		Prodotto prodotto=prodottoService.findProdottoById(idProdotto);
-		FotoByteArray foto=fotoProdottoService.findByProdotto(prodotto).getFirst();
+		FotoByteArray foto=fotoProdottoService.findByIdProdotto(idProdotto).getFirst();
 
 		String descrizione=String.format("%s ha messo mi piace al tuo articolo %s", sender, prodotto.getTitolo());
 

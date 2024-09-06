@@ -1,7 +1,6 @@
 package com.tesi.service;
 
 import com.tesi.entity.FotoByteArray;
-import com.tesi.entity.Prodotto;
 import com.tesi.repository.FotoProdottoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,13 +39,13 @@ public class FotoProdottoServiceImpl implements FotoProdottoService{
 	}
 
 	@Override
-	public List<FotoByteArray> findByProdotto(Prodotto prodotto) {
-		return fotoProdottoRepository.findByProdotto(prodotto);
+	public List<FotoByteArray> findByIdProdotto(Long idProdotto) {
+		return fotoProdottoRepository.findByIdProdotto(idProdotto);
 	}
 
 	@Override
-	public void deleteByProdotto(Prodotto prodotto) {
-		fotoProdottoRepository.deleteByProdotto(prodotto);
+	public void deleteByIdProdotto(Long idProdotto) {
+		fotoProdottoRepository.deleteByIdProdotto(idProdotto);
 	}
 
 

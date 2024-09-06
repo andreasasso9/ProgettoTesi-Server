@@ -16,8 +16,8 @@ public class User implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	private String indirizzo;
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<Prodotto> prodottiPreferiti;
+//	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+//	private Set<Prodotto> prodottiPreferiti;
 
 	public User(){}
 
@@ -26,7 +26,7 @@ public class User implements Serializable {
 		this.username = username;
 		this.password = password;
 		this.indirizzo = indirizzo;
-		prodottiPreferiti = new HashSet<>();
+		//prodottiPreferiti = new HashSet<>();
 	}
 
 	public String getEmail() {
@@ -69,24 +69,38 @@ public class User implements Serializable {
 		this.indirizzo = indirizzo;
 	}
 
-	public Set<Prodotto> getProdottiPreferiti() {
-		return prodottiPreferiti;
-	}
+//	public Set<Prodotto> getProdottiPreferiti() {
+//		return prodottiPreferiti;
+//	}
 
-	public void setProdottiPreferiti(Set<Prodotto> prodotti) {
-		this.prodottiPreferiti = prodotti;
-	}
+//	public void setProdottiPreferiti(Set<Prodotto> prodotti) {
+//		this.prodottiPreferiti = prodotti;
+//	}
 
 	public void update(User user) {
 		this.email = user.email;
 		this.username = user.username;
 		this.password = user.password;
 		this.indirizzo = user.indirizzo;
-		this.prodottiPreferiti = user.prodottiPreferiti;
+//		this.prodottiPreferiti.clear();
+//		this.prodottiPreferiti.addAll(user.getProdottiPreferiti());
 	}
 
 	@Override
 	public String toString() {
 		return String.format(Locale.ITALIAN, "%s %s", username, id);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		User user = (User) o;
+		return Objects.equals(id, user.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, username, password, id, indirizzo);
 	}
 }

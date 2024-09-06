@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService{
 		prodotto.setId(idProdotto);
 
 		assert user != null;
-		user.getProdottiPreferiti().add(prodotto);
+		//user.getProdottiPreferiti().add(prodotto);
 
 		userRepository.save(user);
 		return true;

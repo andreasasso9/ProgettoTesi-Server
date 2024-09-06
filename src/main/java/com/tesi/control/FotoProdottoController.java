@@ -28,15 +28,15 @@ public class FotoProdottoController {
 	@PostMapping("/addFoto")
 	public ResponseEntity<Boolean> addFotoProdotto(@RequestBody List<FotoByteArray> foto) {
 		Logger.getGlobal().log(Level.INFO, "ADD FOTO STARTED");
-		fotoProdottoService.deleteByProdotto(foto.getFirst().getProdotto());
+		fotoProdottoService.deleteByIdProdotto(foto.getFirst().getIdProdotto());
 		foto.forEach(fotoProdottoService::save);
 		Logger.getGlobal().log(Level.INFO, "FOTO ADDED");
 		return ResponseEntity.ok(true);
 	}
 
-	@PostMapping("/findByProdotto")
-	public ResponseEntity<List<FotoByteArray>> findByProdotto(@RequestBody Prodotto prodotto) {
-		List<FotoByteArray> result=fotoProdottoService.findByProdotto(prodotto);
+	@PostMapping("/findByIdProdotto")
+	public ResponseEntity<List<FotoByteArray>> findByProdotto(@RequestBody Long idProdotto) {
+		List<FotoByteArray> result=fotoProdottoService.findByIdProdotto(idProdotto);
 		if (result!=null)
 			return ResponseEntity.ok(result);
 
@@ -44,11 +44,19 @@ public class FotoProdottoController {
 	}
 
 	@PostMapping("/findFirst")
-	public ResponseEntity<FotoByteArray> findFirst(@RequestBody Prodotto prodotto) {
-		List<FotoByteArray> foto=findByProdotto(prodotto).getBody();
+	public ResponseEntity<FotoByteArray> findFirst(@RequestBody Long idProdotto) {
+		List<FotoByteArray> foto=findByProdotto(idProdotto).getBody();
 		if (foto!=null && !foto.isEmpty())
 			return ResponseEntity.ok(foto.getFirst());
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+
+	@PostMapping("/deleteByIdProdotto")
+	ResponseEntity<Void> deleteByIdProdotto(@RequestBody Long id) {
+		fotoProdottoService.deleteByIdProdotto(id);
+
+		Logger.getGlobal().info("DELETE FOTO SUCCESSFUL");
+		return ResponseEntity.ok(null);
 	}
 }

@@ -4,11 +4,16 @@ import com.tesi.entity.entityoptions.Brand;
 import com.tesi.entity.entityoptions.Categoria;
 import com.tesi.entity.entityoptions.Condizioni;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class Prodotto implements Serializable {
 	private String titolo;
 	private String descrizione;
@@ -16,13 +21,16 @@ public class Prodotto implements Serializable {
 	private Brand brand;
 	private Condizioni condizioni;
 	private double prezzo;
-	private int miPiace;
 	private String proprietario;
 	@Id @GeneratedValue
 	private Long id;
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<FotoByteArray> foto;
 	private String compratore;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "idProdotto", referencedColumnName = "id")
+	private List<FotoByteArray> foto;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<User> likedBy;
+
 
 	public Prodotto(String proprietario, String titolo, String descrizione, Categoria categoria, Brand brand, Condizioni condizioni, double prezzo) {
 		this.proprietario = proprietario;
@@ -32,7 +40,7 @@ public class Prodotto implements Serializable {
 		this.brand = brand;
 		this.condizioni = condizioni;
 		this.prezzo = prezzo;
-		this.miPiace = 0;
+		likedBy = new HashSet<>();
 	}
 
 	public Prodotto() {}
@@ -89,14 +97,6 @@ public class Prodotto implements Serializable {
 		this.prezzo = prezzo;
 	}
 
-	public int getMiPiace() {
-		return miPiace;
-	}
-
-	public void setMiPiace(int miPiace) {
-		this.miPiace = miPiace;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -112,8 +112,8 @@ public class Prodotto implements Serializable {
 		brand = newProdotto.brand;
 		condizioni = newProdotto.condizioni;
 		prezzo = newProdotto.prezzo;
-		miPiace = newProdotto.miPiace;
 		compratore = newProdotto.compratore;
+		likedBy = newProdotto.likedBy;
 	}
 
 	public void setIdCompratore(String compratore) {
@@ -126,5 +126,13 @@ public class Prodotto implements Serializable {
 
 	public boolean isBought() {
 		return compratore!=null;
+	}
+
+	public Set<User> getLikedBy() {
+		return likedBy;
+	}
+
+	public int getMiPiace() {
+		return likedBy.size();
 	}
 }
