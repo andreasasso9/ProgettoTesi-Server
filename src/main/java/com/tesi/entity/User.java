@@ -2,7 +2,6 @@ package com.tesi.entity;
 
 import jakarta.persistence.*;
 
-import javax.annotation.ManagedBean;
 import java.io.Serializable;
 import java.util.*;
 
@@ -16,8 +15,6 @@ public class User implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	private String indirizzo;
-//	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
-//	private Set<Prodotto> prodottiPreferiti;
 
 	public User(){}
 
@@ -26,7 +23,7 @@ public class User implements Serializable {
 		this.username = username;
 		this.password = password;
 		this.indirizzo = indirizzo;
-		//prodottiPreferiti = new HashSet<>();
+		//likes = new HashSet<>();
 	}
 
 	public String getEmail() {
@@ -69,21 +66,12 @@ public class User implements Serializable {
 		this.indirizzo = indirizzo;
 	}
 
-//	public Set<Prodotto> getProdottiPreferiti() {
-//		return prodottiPreferiti;
-//	}
-
-//	public void setProdottiPreferiti(Set<Prodotto> prodotti) {
-//		this.prodottiPreferiti = prodotti;
-//	}
-
 	public void update(User user) {
-		this.email = user.email;
-		this.username = user.username;
-		this.password = user.password;
-		this.indirizzo = user.indirizzo;
-//		this.prodottiPreferiti.clear();
-//		this.prodottiPreferiti.addAll(user.getProdottiPreferiti());
+		email = user.email;
+		username = user.username;
+		password = user.password;
+		indirizzo = user.indirizzo;
+//		likes.addAll(user.likes);
 	}
 
 	@Override
@@ -103,4 +91,12 @@ public class User implements Serializable {
 	public int hashCode() {
 		return Objects.hash(email, username, password, id, indirizzo);
 	}
+
+//	public Set<Likes> getLikes() {
+//		return likes;
+//	}
+//
+//	public void setLikes(Set<Likes> likes) {
+//		this.likes = likes;
+//	}
 }

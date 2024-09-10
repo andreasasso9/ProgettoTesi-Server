@@ -1,46 +1,56 @@
 package com.tesi.entity;
 
-import com.tesi.entity.entityoptions.Brand;
-import com.tesi.entity.entityoptions.Categoria;
-import com.tesi.entity.entityoptions.Condizioni;
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@OnDelete(action = OnDeleteAction.CASCADE)
 public class Prodotto implements Serializable {
+	public static final String[] brands = {
+			"Zara", "H&M", "Uniqlo", "GAP",
+			"Nike", "Adidas", "Puma", "Levi's", "Supreme",
+			"Under Armour", "Reebok", "Columbia Sportswear",
+			"Gucci", "Prada", "Emporio Armani"
+	};
+
+	public static final String[] categorie = {
+			"Magliette", "Camicie", "Felpe", "Giubbotti", "Cappotti",
+			"Pantaloni", "Jeans", "Shorts", "Gonne", "Abiti", "Costumi da Bagno",
+			"Biancheria Intima", "Calze", "Scarpe", "Stivali", "Sandali",
+			"Accessori", "Cappelli", "Guanti", "Sciarpe", "Borse",
+			"Abbigliamento Sportivo", "Abbigliamento da Notte", "Abbigliamento da Casa",
+			"Abbigliamento Maternità", "Abbigliamento da Lavoro", "Abbigliamento per Bambini"
+	};
+
+	public static final String[] condizioni = {
+			"Nuovo con cartellino", "Nuovo senza cartellino", "Ottime",
+			"Buone", "Discrete"
+	};
+
 	private String titolo;
 	private String descrizione;
-	private Categoria categoria;
-	private Brand brand;
-	private Condizioni condizioni;
+	private String brand, categoria, condizione;
 	private double prezzo;
 	private String proprietario;
 	@Id @GeneratedValue
 	private Long id;
 	private String compratore;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "idProdotto", referencedColumnName = "id")
 	private List<FotoByteArray> foto;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<User> likedBy;
+	private int likes;
 
-
-	public Prodotto(String proprietario, String titolo, String descrizione, Categoria categoria, Brand brand, Condizioni condizioni, double prezzo) {
+	public Prodotto(String proprietario, String titolo, String descrizione, String categoria, String brand, String condizione, double prezzo) {
 		this.proprietario = proprietario;
 		this.titolo = titolo;
 		this.descrizione = descrizione;
 		this.categoria = categoria;
 		this.brand = brand;
-		this.condizioni = condizioni;
+		this.condizione = condizione;
 		this.prezzo = prezzo;
-		likedBy = new HashSet<>();
+		likes=0;
+		//likes = new HashSet<>();
 	}
 
 	public Prodotto() {}
@@ -65,28 +75,28 @@ public class Prodotto implements Serializable {
 		this.descrizione = descrizione;
 	}
 
-	public Categoria getCategoria() {
+	public String getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(Categoria categoria) {
+	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
 
-	public Brand getBrand() {
+	public String getBrand() {
 		return brand;
 	}
 
-	public void setBrand(Brand brand) {
+	public void setBrand(String brand) {
 		this.brand = brand;
 	}
 
-	public Condizioni getCondizioni() {
-		return condizioni;
+	public String getCondizione() {
+		return condizione;
 	}
 
-	public void setCondizioni(Condizioni condizioni) {
-		this.condizioni = condizioni;
+	public void setCondizione(String condizioni) {
+		this.condizione = condizioni;
 	}
 
 	public double getPrezzo() {
@@ -110,10 +120,10 @@ public class Prodotto implements Serializable {
 		descrizione = newProdotto.descrizione;
 		categoria = newProdotto.categoria;
 		brand = newProdotto.brand;
-		condizioni = newProdotto.condizioni;
+		condizione = newProdotto.condizione;
 		prezzo = newProdotto.prezzo;
 		compratore = newProdotto.compratore;
-		likedBy = newProdotto.likedBy;
+		//likes.addAll(newProdotto.likes);
 	}
 
 	public void setIdCompratore(String compratore) {
@@ -128,11 +138,23 @@ public class Prodotto implements Serializable {
 		return compratore!=null;
 	}
 
-	public Set<User> getLikedBy() {
-		return likedBy;
+	public int getLikes() {
+		return likes;
 	}
 
-	public int getMiPiace() {
-		return likedBy.size();
+	public void setLikes(int likes) {
+		this.likes = likes;
 	}
+
+	//	public Set<Likes> getLikes() {
+//		return likes;
+//	}
+//
+//	public void setLikes(Set<Likes> likes) {
+//		this.likes = likes;
+//	}
+//
+//	public int getMiPiace() {
+//		return likes.size();
+//	}
 }

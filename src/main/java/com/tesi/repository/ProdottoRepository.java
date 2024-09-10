@@ -21,6 +21,6 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Long> {
 
 	List<Prodotto> findByCompratore(String compratore);
 
-	@Query("select p from Prodotto p join p.likedBy u where u.username = ?1")
+	@Query("select p from Prodotto p, Likes l where p.id=l.id.idProdotto and l.id.username=?1")
 	Set<Prodotto> findByLikedBy(String username);
 }

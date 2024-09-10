@@ -62,7 +62,7 @@ public class ProdottoController {
 		Pageable pageable= PageRequest.of(0, PAGE_LIMIT);
 		List<Prodotto> prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable);
 		if (prodotti!=null && !prodotti.isEmpty()) {
-			prodotti.sort(Comparator.comparingInt(Prodotto::getMiPiace));
+			prodotti.sort(Comparator.comparingInt(Prodotto::getLikes));
 			logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
 			return ResponseEntity.ok(prodotti);
 		}
