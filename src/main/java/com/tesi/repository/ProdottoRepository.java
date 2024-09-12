@@ -1,8 +1,10 @@
 package com.tesi.repository;
 
 import com.tesi.entity.Prodotto;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +13,7 @@ import java.util.Set;
 
 @Repository
 public interface ProdottoRepository extends JpaRepository<Prodotto, Long> {
-	@Query("select  p from Prodotto p where p.proprietario != ?1 and p.compratore is null")
+	@Query("select  p from Prodotto p where p.proprietario != ?1 and p.compratore is null order by p.likes desc")
 	List<Prodotto> getAllProdottoNotOwnedBy(String proprietario, Pageable pageable);
 
 	List<Prodotto> findByProprietario(String proprietario);

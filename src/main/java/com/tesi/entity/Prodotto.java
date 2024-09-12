@@ -116,14 +116,18 @@ public class Prodotto implements Serializable {
 	}
 
 	public void update(Prodotto newProdotto) {
+		if (compratore==null)
+			compratore = newProdotto.compratore;
+		else
+			throw new RuntimeException("Il prodotto è stato già acquistato");
+
 		titolo = newProdotto.titolo;
 		descrizione = newProdotto.descrizione;
 		categoria = newProdotto.categoria;
 		brand = newProdotto.brand;
 		condizione = newProdotto.condizione;
 		prezzo = newProdotto.prezzo;
-		compratore = newProdotto.compratore;
-		//likes.addAll(newProdotto.likes);
+		likes = newProdotto.likes;
 	}
 
 	public void setIdCompratore(String compratore) {

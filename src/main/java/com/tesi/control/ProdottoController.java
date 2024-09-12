@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -62,7 +61,6 @@ public class ProdottoController {
 		Pageable pageable= PageRequest.of(0, PAGE_LIMIT);
 		List<Prodotto> prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable);
 		if (prodotti!=null && !prodotti.isEmpty()) {
-			prodotti.sort(Comparator.comparingInt(Prodotto::getLikes));
 			logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
 			return ResponseEntity.ok(prodotti);
 		}
