@@ -25,4 +25,8 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Long> {
 
 	@Query("select p from Prodotto p, Likes l where p.id=l.id.idProdotto and l.id.username=?1")
 	Set<Prodotto> findByLikedBy(String username);
+
+	@Lock(LockModeType.PESSIMISTIC_WRITE)
+	@Query("select p from Prodotto p where p.id=?1")
+	Prodotto findByIdForUpdate(Long id);
 }

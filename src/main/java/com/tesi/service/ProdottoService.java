@@ -10,7 +10,7 @@ import java.util.Set;
 public interface ProdottoService {
 	Prodotto findProdottoById(long id);
 	List<Prodotto> getAllProdotto();
-	Prodotto addProdotto(Prodotto prodotto);
+	Prodotto save(Prodotto prodotto);
 	boolean updateProdotto(Prodotto prodotto);
 	void deleteProdotto(long id);
 	List<Prodotto> getAllProdottoNotOwnedBy(String user, Pageable pageable);
@@ -18,4 +18,5 @@ public interface ProdottoService {
 	List<Prodotto> findByRicerca(String user, String text);
 	List<Prodotto> findByCompratore(String compratore);
 	Set<Prodotto> findByLikedBy(String username);
+	Prodotto findProdottoByIdForUpdate(long id);
 }

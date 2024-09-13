@@ -116,11 +116,6 @@ public class Prodotto implements Serializable {
 	}
 
 	public void update(Prodotto newProdotto) {
-		if (compratore==null)
-			compratore = newProdotto.compratore;
-		else
-			throw new RuntimeException("Il prodotto è stato già acquistato");
-
 		titolo = newProdotto.titolo;
 		descrizione = newProdotto.descrizione;
 		categoria = newProdotto.categoria;
@@ -130,8 +125,11 @@ public class Prodotto implements Serializable {
 		likes = newProdotto.likes;
 	}
 
-	public void setIdCompratore(String compratore) {
-		this.compratore = compratore;
+	public void setCompratore(String compratore) {
+		if (this.compratore==null)
+			this.compratore = compratore;
+		else
+			throw new RuntimeException("Il prodotto è stato già acquistato");
 	}
 
 	public String getCompratore() {

@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class ProdottoController {
 	@PostMapping("/addProdotto")
 	public ResponseEntity<Prodotto> addProdotto(@RequestBody Prodotto prodotto) {
 		logger.log(Level.INFO, "ADD PRODOTTO STARTED");
-		Prodotto result = prodottoService.addProdotto(prodotto);
+		Prodotto result = prodottoService.save(prodotto);
 		if (result!=null) {
 			logger.log(Level.INFO, "ADD SUCCESSFUL");
 			return ResponseEntity.ok(result);
@@ -70,9 +71,10 @@ public class ProdottoController {
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<Boolean> update(@RequestBody Prodotto prodotto) {
+	public ResponseEntity<Boolean> update(@RequestBody Long idProdotto) {
 		logger.log(Level.INFO, "UPDATE PRODOTTO STARTED");
-		if (prodottoService.updateProdotto(prodotto)) {
+		Prodotto p=prodottoService.findProdottoByIdForUpdate(idProdotto);
+		if (prodottoService.updateProdotto(p)) {
 			logger.log(Level.INFO, "UPDATE SUCCESSFUL");
 			return ResponseEntity.ok(true);
 		}
@@ -125,5 +127,21 @@ public class ProdottoController {
 	@PostMapping("/findByLikedBy")
 	public ResponseEntity<Set<Prodotto>> findByLikedBy(@RequestBody String username) {
 		return ResponseEntity.ok(prodottoService.findByLikedBy(username.replace("\"", "")));
+	}
+
+	@PostMapping("/acquista")
+	@Transactional
+	public ResponseEntity<Boolean> acquista(@RequestParam String username, @RequestParam Long idProdotto) {
+		Prodotto p=prodottoService.findProdottoByIdForUpdate(idProdotto);
+		try {
+			p.setCompratore(username.replace("\"", ""));
+			if (prodottoService.save(p)!=null)
+				return ResponseEntity.ok(true);
+			return ResponseEntity.badRequest().build();
+		} catch (RuntimeException e) {
+			logger.info(e.getMessage());
+			return ResponseEntity.badRequest().build();
+		}
+
 	}
 }

@@ -2,16 +2,12 @@ package com.tesi.service;
 
 import com.tesi.entity.Prodotto;
 import com.tesi.repository.ProdottoRepository;
-import jakarta.persistence.LockModeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 @Service
 public class ProdottoServiceImpl implements ProdottoService{
@@ -32,25 +28,17 @@ public class ProdottoServiceImpl implements ProdottoService{
 		return prodottoRepository.findAll();
 	}
 
-	@Override
-	public Prodotto addProdotto(Prodotto prodotto) {
+	public Prodotto save(Prodotto prodotto) {
 		return prodottoRepository.save(prodotto);
 	}
 
 	@Override
-	@Transactional
-	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	public boolean updateProdotto(Prodotto updatedProdotto) {
-		Prodotto oldProdotto=prodottoRepository.findById(updatedProdotto.getId()).orElse(null);
+		Prodotto oldProdotto=prodottoRepository.findByIdForUpdate(updatedProdotto.getId());
 		if(oldProdotto!=null) {
-			try {
-				oldProdotto.update(updatedProdotto);
-				prodottoRepository.save(oldProdotto);
-				return true;
-			} catch (RuntimeException e) {
-				Logger.getGlobal().info(e.getMessage());
-				return false;
-			}
+			oldProdotto.update(updatedProdotto);
+			prodottoRepository.save(oldProdotto);
+			return true;
 		}
 		return false;
 	}
@@ -83,5 +71,10 @@ public class ProdottoServiceImpl implements ProdottoService{
 	@Override
 	public Set<Prodotto> findByLikedBy(String username) {
 		return prodottoRepository.findByLikedBy(username);
+	}
+
+	@Override
+	public Prodotto findProdottoByIdForUpdate(long id) {
+		return prodottoRepository.findByIdForUpdate(id);
 	}
 }
