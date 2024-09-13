@@ -58,12 +58,17 @@ public class ProdottoController {
 	}
 
 	@PostMapping("/getAllNotOwnedBy")
-	public ResponseEntity<List<Prodotto>> getAllNotOwnedBy(@RequestBody String user) {
-		Pageable pageable= PageRequest.of(0, PAGE_LIMIT);
+	public ResponseEntity<List<Prodotto>> getAllNotOwnedBy(@RequestParam String user, @RequestParam int page) {
+		Pageable pageable= PageRequest.of(page, PAGE_LIMIT);
 		List<Prodotto> prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable);
-		if (prodotti!=null && !prodotti.isEmpty()) {
-			logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
-			return ResponseEntity.ok(prodotti);
+		if (prodotti!=null) {
+			if (prodotti.isEmpty())
+				prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable.previousOrFirst());
+
+			if (!prodotti.isEmpty()) {
+				logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
+				return ResponseEntity.ok(prodotti);
+			}
 		}
 
 		logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY FAILED");

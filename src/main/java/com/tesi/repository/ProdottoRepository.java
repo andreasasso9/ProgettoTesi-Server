@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -28,5 +29,6 @@ public interface ProdottoRepository extends JpaRepository<Prodotto, Long> {
 
 	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	@Query("select p from Prodotto p where p.id=?1")
+	@Transactional
 	Prodotto findByIdForUpdate(Long id);
 }
