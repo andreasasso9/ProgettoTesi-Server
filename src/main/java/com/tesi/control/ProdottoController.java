@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 public class ProdottoController {
 	private final ProdottoService prodottoService;
 	private final Logger logger;
-	private final int PAGE_LIMIT=20;
 
 	@Autowired
 	public ProdottoController(ProdottoService prodottoService) {
@@ -59,20 +58,40 @@ public class ProdottoController {
 
 	@PostMapping("/getAllNotOwnedBy")
 	public ResponseEntity<List<Prodotto>> getAllNotOwnedBy(@RequestParam String user, @RequestParam int page) {
-		Pageable pageable= PageRequest.of(page, PAGE_LIMIT);
-		List<Prodotto> prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable);
-		if (prodotti!=null) {
-			if (prodotti.isEmpty())
-				prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable.previousOrFirst());
+//		int PAGE_LIMIT = 5;
+//		Pageable pageable= PageRequest.of(page, PAGE_LIMIT);
+//		List<Prodotto> prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable);
+//		if (prodotti!=null && !prodotti.isEmpty()) {
+//			logger.info("GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
+//			return ResponseEntity.ok(prodotti);
+//		} else {
+//			int NEW_PAGE_LIMIT = PAGE_LIMIT /2;
+//			pageable= PageRequest.of(page, NEW_PAGE_LIMIT);
+//			prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable);
+//			if (prodotti!=null && !prodotti.isEmpty()) {
+//				logger.info("GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
+//			}
+//		}
+		int PAGE_LIMIT=5;
+		List<Prodotto> prodotti=getProdottiByPageable(page, PAGE_LIMIT, user);
+		if (prodotti==null)
+			prodotti=getProdottiByPageable(page, PAGE_LIMIT/2, user);
 
-			if (!prodotti.isEmpty()) {
-				logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
-				return ResponseEntity.ok(prodotti);
-			}
+		if (prodotti!=null) {
+			logger.info("GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
+			return ResponseEntity.ok(prodotti);
 		}
 
 		logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY FAILED");
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		return ResponseEntity.notFound().build();
+	}
+
+	private List<Prodotto> getProdottiByPageable(int page, int limit, String user) {
+		Pageable pageable= PageRequest.of(page, limit);
+		List<Prodotto> prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable);
+		if (prodotti!=null && !prodotti.isEmpty())
+			return prodotti;
+		return null;
 	}
 
 	@PostMapping("/update")

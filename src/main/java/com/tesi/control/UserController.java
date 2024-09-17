@@ -59,4 +59,12 @@ public class UserController {
 			return ResponseEntity.ok(user);
 		return ResponseEntity.notFound().build();
 	}
+
+	@PostMapping("/checkEmail")
+	public ResponseEntity<Boolean> checkEmail(@RequestBody String email) {
+		User user=userService.findByEmail(email.replace("\"", ""));
+		if (user==null)
+			return ResponseEntity.ok(true);
+		return ResponseEntity.notFound().build();
+	}
 }

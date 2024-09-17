@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean update(User updatedUser) {
-		User olduser=userRepository.findById(updatedUser.getId()).orElse(null);
+		User olduser=userRepository.findByIdForUpdate(updatedUser.getId());
 		if (olduser != null) {
 			olduser.update(updatedUser);
 			userRepository.save(olduser);
@@ -48,5 +48,10 @@ public class UserServiceImpl implements UserService{
 		}
 
 		return false;
+	}
+
+	@Override
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 }
