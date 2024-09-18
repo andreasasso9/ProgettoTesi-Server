@@ -19,4 +19,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 	@Transactional
 	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	User findByIdForUpdate(UUID id);
+
+	@Query("select u.foto from User u where u.username=?1")
+	byte[] findFotoByUsername(String username);
 }

@@ -67,4 +67,13 @@ public class UserController {
 			return ResponseEntity.ok(true);
 		return ResponseEntity.notFound().build();
 	}
+
+	@PostMapping("/findFoto")
+	public ResponseEntity<String> findFoto(@RequestBody String username) {
+		logger.info("Find foto");
+		String foto=userService.findFoto(username.replace("\"", ""));
+		if (foto!=null)
+			return ResponseEntity.ok(foto);
+		return ResponseEntity.notFound().build();
+	}
 }

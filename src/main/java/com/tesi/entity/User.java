@@ -15,6 +15,8 @@ public class User implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	private String indirizzo;
+	@Lob @Column(columnDefinition = "MEDIUMBLOB")
+	private byte[] foto;
 
 	public User(){}
 
@@ -23,7 +25,7 @@ public class User implements Serializable {
 		this.username = username;
 		this.password = password;
 		this.indirizzo = indirizzo;
-		//likes = new HashSet<>();
+
 	}
 
 	public String getEmail() {
@@ -71,7 +73,7 @@ public class User implements Serializable {
 		username = user.username;
 		password = user.password;
 		indirizzo = user.indirizzo;
-//		likes.addAll(user.likes);
+		foto = user.foto;
 	}
 
 	@Override
@@ -92,11 +94,11 @@ public class User implements Serializable {
 		return Objects.hash(email, username, password, id, indirizzo);
 	}
 
-//	public Set<Likes> getLikes() {
-//		return likes;
-//	}
-//
-//	public void setLikes(Set<Likes> likes) {
-//		this.likes = likes;
-//	}
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
+	}
 }

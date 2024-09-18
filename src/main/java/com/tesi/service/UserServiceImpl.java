@@ -5,6 +5,7 @@ import com.tesi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -54,4 +55,11 @@ public class UserServiceImpl implements UserService{
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
+
+	@Override
+	public String findFoto(String username) {
+		return Arrays.toString(userRepository.findFotoByUsername(username));
+	}
+
+
 }

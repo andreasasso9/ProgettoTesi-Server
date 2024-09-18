@@ -11,4 +11,5 @@ public interface UserService {
 	User getUserByUsername(String username);
 	boolean update(User updatedUser);
 	User findByEmail(String email);
+	String findFoto(String username);
 }
