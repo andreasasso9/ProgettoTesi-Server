@@ -8,4 +8,5 @@ public interface TextService {
 	void save(Text text);
 	void deleteById(Long id);
 	List<Text> findByReceiver(String receiver);
+	List<Text> findByChatId(String chatId);
 }

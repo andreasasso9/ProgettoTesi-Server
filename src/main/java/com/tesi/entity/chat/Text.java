@@ -2,21 +2,22 @@ package com.tesi.entity.chat;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Text {
+public class Text implements Serializable {
 	private String text;
 	private String sender, receiver;
-	protected boolean delivered;
 	@Id
 	@GeneratedValue
 	private Long id;
+	private String chatId;
 
 	public Text(String text, String sender, String receiver) {
 		this.text = text;
 		this.sender = sender;
 		this.receiver = receiver;
-		delivered = false;
 	}
 
 	public Text() {}
@@ -49,11 +50,11 @@ public class Text {
 		this.receiver = receiver;
 	}
 
-	public boolean isDelivered() {
-		return delivered;
+	public String getChatId() {
+		return chatId;
 	}
 
-	public void setDelivered(boolean delivered) {
-		this.delivered = delivered;
+	public void setChatId(String chatId) {
+		this.chatId = chatId;
 	}
 }

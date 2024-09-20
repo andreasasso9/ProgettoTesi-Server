@@ -30,4 +30,9 @@ public class TextServiceImpl implements TextService{
 	public List<Text> findByReceiver(String receiver) {
 		return textRepository.findByReceiver(receiver);
 	}
+
+	@Override
+	public List<Text> findByChatId(String chatId) {
+		return textRepository.findByChatId(chatId);
+	}
 }

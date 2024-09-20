@@ -12,7 +12,6 @@ public class Image extends Text{
 	public Image(String foto, String sender, String receiver) {
 		super(null, sender, receiver);
 		this.foto=foto;
-		delivered=false;
 	}
 
 	public Image() {}
