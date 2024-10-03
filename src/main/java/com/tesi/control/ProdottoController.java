@@ -58,28 +58,12 @@ public class ProdottoController {
 
 	@PostMapping("/getAllNotOwnedBy")
 	public ResponseEntity<List<Prodotto>> getAllNotOwnedBy(@RequestParam String user, @RequestParam int page) {
-//		int PAGE_LIMIT = 5;
-//		Pageable pageable= PageRequest.of(page, PAGE_LIMIT);
-//		List<Prodotto> prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable);
-//		if (prodotti!=null && !prodotti.isEmpty()) {
-//			logger.info("GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
-//			return ResponseEntity.ok(prodotti);
-//		} else {
-//			int NEW_PAGE_LIMIT = PAGE_LIMIT /2;
-//			pageable= PageRequest.of(page, NEW_PAGE_LIMIT);
-//			prodotti=prodottoService.getAllProdottoNotOwnedBy(user.replace("\"", ""), pageable);
-//			if (prodotti!=null && !prodotti.isEmpty()) {
-//				logger.info("GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
-//			}
-//		}
-		int PAGE_LIMIT=5;
-		List<Prodotto> prodotti=getProdottiByPageable(page, PAGE_LIMIT, user);
-		if (prodotti==null)
-			prodotti=getProdottiByPageable(page, PAGE_LIMIT/2, user);
-
-		if (prodotti!=null) {
-			logger.info("GET ALL PRODOTTO NOT OWNED BY SUCCESSFUL");
-			return ResponseEntity.ok(prodotti);
+		int PAGE_LIMIT=10;
+		while (PAGE_LIMIT>0) {
+			List<Prodotto> prodotti=getProdottiByPageable(page, PAGE_LIMIT, user);
+			if (prodotti!=null && !prodotti.isEmpty())
+				return ResponseEntity.ok(prodotti);
+			PAGE_LIMIT /= 2;
 		}
 
 		logger.log(Level.INFO, "GET ALL PRODOTTO NOT OWNED BY FAILED");

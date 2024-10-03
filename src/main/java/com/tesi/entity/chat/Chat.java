@@ -12,7 +12,7 @@ public class Chat implements Serializable {
 	@Id
 	private String id;
 	@OneToMany(orphanRemoval = true)
-	private List<Text> texts;
+	transient private List<Text> texts;
 	private String user1, user2;
 
 	public Chat(List<Text> texts, String id, String user1, String user2) {

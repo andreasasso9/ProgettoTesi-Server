@@ -1,6 +1,5 @@
 package com.tesi.interceptor;
 
-import com.tesi.utils.PasswordEncrypter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -18,11 +17,11 @@ public class UserSaveInterceptor implements HandlerInterceptor {
 	}
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 		String password = request.getParameter("password");
-		password= PasswordEncrypter.encrypt(password);
+		//password= PasswordEncrypter.encrypt(password);
 
-		request.setAttribute("password", password);
+		request.setAttribute("password", password.replace("\"", ""));
 
 		logger.log(Level.INFO, "Password encrypted");
 

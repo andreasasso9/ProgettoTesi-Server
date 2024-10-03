@@ -39,7 +39,7 @@ public class ChatServiceImpl implements ChatService {
 			else if (chat.getUser2().equalsIgnoreCase(username))
 				chat.setUser2("");
 			chatRepository.save(chat);
-			if (chat.getUser1()==null && chat.getUser2()==null) {
+			if (chat.getUser1().equalsIgnoreCase("") && chat.getUser2().equalsIgnoreCase("")) {
 				textRepository.deleteByChatId(chat.getId());
 				chatRepository.deleteById(chat.getId());
 			}
@@ -49,7 +49,6 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public List<Chat> findByUser(String username) {
-		List<Chat> chats=chatRepository.findByUser(username);
-		return chats;
+		return chatRepository.findByUser(username);
 	}
 }

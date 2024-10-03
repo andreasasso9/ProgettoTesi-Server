@@ -2,7 +2,6 @@ package com.tesi.filter;
 
 import com.tesi.entity.User;
 import com.tesi.service.UserService;
-import com.tesi.utils.PasswordEncrypter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,11 +30,11 @@ public class UserLoginFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		password= PasswordEncrypter.encrypt(password);
+		//password= PasswordEncrypter.encrypt(password);
 
 		User user=userService.getUserByUsername(username);
 
-		if (user!=null && user.getPassword().equals(password)) {
+		if (user!=null && user.getPassword().equals(password.replace("\"", ""))) {
 			logger.log(Level.INFO, "Login successful");
 			request.setAttribute("user", user);
 			filterChain.doFilter(request, response);
@@ -44,7 +43,7 @@ public class UserLoginFilter extends OncePerRequestFilter {
 	}
 
 	@Override
-	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+	protected boolean shouldNotFilter(HttpServletRequest request) {
 		return !request.getServletPath().contains("/login");
 	}
 }
