@@ -39,7 +39,7 @@ public class ChatServiceImpl implements ChatService {
 			else if (chat.getUser2().equalsIgnoreCase(username))
 				chat.setUser2("");
 			chatRepository.save(chat);
-			if (chat.getUser1().equalsIgnoreCase("") && chat.getUser2().equalsIgnoreCase("")) {
+			if (chat.getUser1().isEmpty() && chat.getUser2().isEmpty()) {
 				textRepository.deleteByChatId(chat.getId());
 				chatRepository.deleteById(chat.getId());
 			}
